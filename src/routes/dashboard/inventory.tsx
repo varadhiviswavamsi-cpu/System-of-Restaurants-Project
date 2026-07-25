@@ -1,12 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { inventory } from "@/lib/mock-data";
-import { AlertTriangle, PackagePlus } from "lucide-react";
+import { AlertTriangle, PackagePlus, SearchX } from "lucide-react";
 import { SummaryCard } from "@/components/common/SummaryCard";
+import { EmptyState } from "@/components/common/EmptyState";
+
 
 export const Route = createFileRoute("/dashboard/inventory")({
   head: () => ({
@@ -21,8 +24,18 @@ export const Route = createFileRoute("/dashboard/inventory")({
 });
 
 function InventoryPage() {
+  const [q, setQ] = useState("");
   const low = inventory.filter((i) => i.status !== "in-stock").length;
   const total = inventory.length;
+  const filtered = inventory.filter((i) => {
+    const s = q.trim().toLowerCase();
+    if (!s) return true;
+    return (
+      i.name.toLowerCase().includes(s) ||
+      i.supplier.toLowerCase().includes(s) ||
+      i.status.toLowerCase().includes(s)
+    );
+  });
   return (
     <DashboardShell
       title="Inventory"
@@ -42,37 +55,47 @@ function InventoryPage() {
       <div className="card-elevated p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="font-display text-lg font-semibold">Stock levels</div>
-          <SearchInput placeholder="Search items" className="w-full max-w-xs" />
+          <SearchInput
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Search items, suppliers, status"
+            className="w-full max-w-xs"
+          />
         </div>
         <div className="mt-4 overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Item</TableHead>
-                <TableHead>Quantity</TableHead>
-                <TableHead>Supplier</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {inventory.map((i) => (
-                <TableRow key={i.id}>
-                  <TableCell className="font-medium">{i.name}</TableCell>
-                  <TableCell>{i.qty} {i.unit}</TableCell>
-                  <TableCell className="text-muted-foreground">{i.supplier}</TableCell>
-                  <TableCell><StatusBadge status={i.status} /></TableCell>
-                  <TableCell className="text-right">
-                    <Button size="sm" variant={i.status === "in-stock" ? "ghost" : "default"} className={i.status !== "in-stock" ? "bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95" : ""}>
-                      {i.status === "in-stock" ? "Adjust" : "Reorder"}
-                    </Button>
-                  </TableCell>
+          {filtered.length === 0 ? (
+            <EmptyState icon={SearchX} title="No matches" description={`Nothing matches "${q}". Try a different search.`} />
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Item</TableHead>
+                  <TableHead>Quantity</TableHead>
+                  <TableHead>Supplier</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Action</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filtered.map((i) => (
+                  <TableRow key={i.id}>
+                    <TableCell className="font-medium">{i.name}</TableCell>
+                    <TableCell>{i.qty} {i.unit}</TableCell>
+                    <TableCell className="text-muted-foreground">{i.supplier}</TableCell>
+                    <TableCell><StatusBadge status={i.status} /></TableCell>
+                    <TableCell className="text-right">
+                      <Button size="sm" variant={i.status === "in-stock" ? "ghost" : "default"} className={i.status !== "in-stock" ? "bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95" : ""}>
+                        {i.status === "in-stock" ? "Adjust" : "Reorder"}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </div>
       </div>
     </DashboardShell>
   );
 }
+

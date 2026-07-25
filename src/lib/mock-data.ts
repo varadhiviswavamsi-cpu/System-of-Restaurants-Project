@@ -6,6 +6,7 @@ import truffleAsset from "@/assets/truffle-pasta.jpg.asset.json";
 import branzinoAsset from "@/assets/branzino.jpg.asset.json";
 import burrataAsset from "@/assets/burrata-peach.jpg.asset.json";
 import tiramisuAsset from "@/assets/tiramisu.jpg.asset.json";
+import octopusAsset from "@/assets/octopus.jpg.asset.json";
 
 
 

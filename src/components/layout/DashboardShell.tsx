@@ -10,6 +10,8 @@ import {
   Clock,
   ClipboardList,
   Home,
+  Sun,
+  Moon,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { Logo } from "@/components/brand/Logo";
@@ -28,6 +30,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useTheme } from "@/hooks/use-theme";
 
 const nav = [
   {

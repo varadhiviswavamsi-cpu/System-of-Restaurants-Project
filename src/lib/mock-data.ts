@@ -26,7 +26,7 @@ export const menuItems: MenuItem[] = [
   { id: "m1", name: "Wood-fired Margherita", description: "San Marzano tomato, fior di latte, basil", price: 14, category: "Pizza", available: true, emoji: "🍕", image: margheritaAsset.url },
   { id: "m2", name: "Truffle Tagliatelle", description: "Fresh pasta, black truffle, parmigiano", price: 22, category: "Pasta", available: true, emoji: "🍝", image: truffleAsset.url },
 
-  { id: "m3", name: "Grilled Branzino", description: "Whole sea bass, lemon, herbs, olive oil", price: 28, category: "Mains", available: true, emoji: "🐟" },
+  { id: "m3", name: "Grilled Branzino", description: "Whole sea bass, lemon, herbs, olive oil", price: 28, category: "Mains", available: true, emoji: "🐟", image: branzinoAsset.url },
   { id: "m4", name: "Burrata & Peach", description: "Creamy burrata, grilled peach, prosciutto", price: 16, category: "Starters", available: true, emoji: "🧀" },
   { id: "m5", name: "Tiramisu Classico", description: "Espresso, mascarpone, cocoa", price: 9, category: "Desserts", available: true, emoji: "🍰" },
   { id: "m6", name: "Charred Octopus", description: "Smoked paprika, potato, salsa verde", price: 19, category: "Starters", available: false, emoji: "🐙" },

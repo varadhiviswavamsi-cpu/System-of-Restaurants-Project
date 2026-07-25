@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { Logo } from "@/components/brand/Logo";
+import { NavHistory } from "@/components/common/NavHistory";
 import {
   Sidebar,
   SidebarContent,
@@ -138,6 +139,7 @@ export function DashboardShell({
         <div className="flex flex-1 flex-col">
           <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur">
             <SidebarTrigger />
+            <NavHistory />
             <div className="min-w-0 flex-1">
               <div className="truncate font-display text-lg font-semibold">{title}</div>
               {subtitle && <div className="truncate text-xs text-muted-foreground">{subtitle}</div>}

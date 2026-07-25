@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { Sun, Moon } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
+import { NavHistory } from "@/components/common/NavHistory";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "@/hooks/use-theme";
 
@@ -35,6 +36,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
           <Link to="/" className="shrink-0">
             <Logo />
           </Link>
+          <NavHistory />
           <nav className="hidden flex-1 items-center justify-center gap-1 md:flex">
             {links.map((l) => (
               <Link

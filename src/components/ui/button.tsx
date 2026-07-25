@@ -5,16 +5,16 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:border-primary hover:shadow-[0_0_0_1px_var(--primary),0_0_20px_-2px_var(--primary),0_0_36px_-8px_var(--primary)] active:scale-[0.98]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98]",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow hover:bg-transparent hover:text-primary-foreground active:text-primary-foreground",
-        destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 hover:text-destructive-foreground active:text-destructive-foreground",
-        outline: "btn-jelly text-foreground hover:text-primary active:text-primary",
-        secondary: "btn-jelly text-secondary-foreground hover:text-primary active:text-primary",
-        ghost: "btn-jelly text-foreground hover:text-primary active:text-primary",
-        link: "text-primary underline-offset-4 hover:underline hover:shadow-none hover:border-transparent",
+        default: "bg-primary text-primary-foreground shadow hover:bg-transparent hover:text-primary-foreground active:text-primary-foreground hover:border-primary hover:shadow-[0_0_0_1px_var(--primary),0_0_20px_-2px_var(--primary),0_0_36px_-8px_var(--primary)]",
+        destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 hover:text-destructive-foreground active:text-destructive-foreground hover:shadow-[0_0_0_1px_var(--destructive),0_0_20px_-2px_var(--destructive)]",
+        outline: "btn-jelly text-foreground hover:text-primary active:text-primary hover:border-white/80 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.85),0_0_0_1px_rgba(255,255,255,0.6),0_0_22px_-2px_rgba(255,255,255,0.75)]",
+        secondary: "btn-jelly text-secondary-foreground hover:text-primary active:text-primary hover:border-white/80 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.85),0_0_0_1px_rgba(255,255,255,0.6),0_0_22px_-2px_rgba(255,255,255,0.75)]",
+        ghost: "btn-jelly text-foreground hover:text-primary active:text-primary hover:border-white/80 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.85),0_0_0_1px_rgba(255,255,255,0.6),0_0_22px_-2px_rgba(255,255,255,0.75)]",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2",

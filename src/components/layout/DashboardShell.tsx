@@ -143,6 +143,7 @@ export function DashboardShell({
               {subtitle && <div className="truncate text-xs text-muted-foreground">{subtitle}</div>}
             </div>
             <div className="hidden items-center gap-2 sm:flex">{actions}</div>
+            <ThemeToggle />
             <Button variant="outline" size="sm" asChild className="hidden md:inline-flex">
               <Link to="/auth/login">Sign in</Link>
             </Button>

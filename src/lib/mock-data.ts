@@ -2,6 +2,8 @@
 // Replace with real Supabase queries in later prompts.
 
 import margheritaAsset from "@/assets/wood-fired-margherita.jpg.asset.json";
+import truffleAsset from "@/assets/truffle-pasta.jpg.asset.json";
+
 
 export type OrderStatus = "pending" | "preparing" | "ready" | "served" | "cancelled";
 export type TableStatus = "available" | "occupied" | "reserved" | "cleaning";

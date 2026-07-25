@@ -10,6 +10,8 @@ import {
   Clock,
   ClipboardList,
   Home,
+  Sun,
+  Moon,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { Logo } from "@/components/brand/Logo";
@@ -28,6 +30,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useTheme } from "@/hooks/use-theme";
 
 const nav = [
   {
@@ -55,6 +58,21 @@ const nav = [
     ],
   },
 ];
+
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={toggleTheme}
+      aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+      className="h-9 w-9 shrink-0 rounded-full border-border/70 bg-background/80 backdrop-blur-sm hover:bg-accent"
+    >
+      {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+    </Button>
+  );
+}
 
 function AppSidebar() {
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
@@ -125,6 +143,7 @@ export function DashboardShell({
               {subtitle && <div className="truncate text-xs text-muted-foreground">{subtitle}</div>}
             </div>
             <div className="hidden items-center gap-2 sm:flex">{actions}</div>
+            <ThemeToggle />
             <Button variant="outline" size="sm" asChild className="hidden md:inline-flex">
               <Link to="/auth/login">Sign in</Link>
             </Button>

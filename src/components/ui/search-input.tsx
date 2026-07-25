@@ -14,7 +14,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           ref={ref}
           type="text"
           className={cn(
-            "peer h-11 w-full rounded-full border border-white/25 bg-white/15 px-5 py-2 pr-12 text-sm text-foreground shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35),0_8px_32px_-12px_rgba(0,0,0,0.2)] backdrop-blur-2xl transition-all placeholder:text-muted-foreground/80 focus-visible:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:border-primary/40 dark:border-white/15 dark:bg-white/8 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2),0_8px_32px_-12px_rgba(0,0,0,0.5)] dark:focus-visible:bg-white/12",
+            "peer h-11 w-full rounded-full border border-white/40 bg-gradient-to-b from-white/35 to-white/10 px-5 py-2 pr-12 text-sm text-foreground shadow-[inset_0_1px_0_0_rgba(255,255,255,0.55),0_8px_32px_-12px_rgba(0,0,0,0.18)] backdrop-blur-2xl transition-all placeholder:text-muted-foreground/90 focus-visible:bg-gradient-to-b focus-visible:from-white/45 focus-visible:to-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:border-primary/40 dark:border-white/20 dark:from-white/15 dark:to-white/5 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25),0_8px_32px_-12px_rgba(0,0,0,0.5)] dark:focus-visible:from-white/20 dark:focus-visible:to-white/10",
           )}
           {...props}
         />

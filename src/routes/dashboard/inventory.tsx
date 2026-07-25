@@ -64,7 +64,7 @@ function InventoryPage() {
         </div>
         <div className="mt-4 overflow-x-auto">
           {filtered.length === 0 ? (
-            <EmptyState title="No matches" description={`Nothing matches "${q}". Try a different search.`} />
+            <EmptyState icon={SearchX} title="No matches" description={`Nothing matches "${q}". Try a different search.`} />
           ) : (
             <Table>
               <TableHeader>

@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
-import { orders } from "@/lib/mock-data";
+import { orders as initialOrders, type Order, type OrderStatus } from "@/lib/mock-data";
 import { CheckCircle2, ChefHat, Flame, Timer } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/dashboard/kitchen")({
   head: () => ({
@@ -23,7 +25,23 @@ const columns: { key: "pending" | "preparing" | "ready"; label: string; icon: ty
   { key: "ready", label: "Ready to run", icon: CheckCircle2 },
 ];
 
+const nextStatus: Record<"pending" | "preparing" | "ready", { status: OrderStatus; label: string }> = {
+  pending: { status: "preparing", label: "started" },
+  preparing: { status: "ready", label: "marked ready" },
+  ready: { status: "served", label: "bumped to pass" },
+};
+
 function KitchenDashboard() {
+  const [orders, setOrders] = useState<Order[]>(initialOrders);
+
+  const advance = (order: Order, from: "pending" | "preparing" | "ready") => {
+    const next = nextStatus[from];
+    setOrders((prev) => prev.map((o) => (o.id === order.id ? { ...o, status: next.status } : o)));
+    toast.success(`Order ${order.id} ${next.label}`, {
+      description: `Table ${order.table}`,
+    });
+  };
+
   return (
     <DashboardShell
       title="Kitchen display"
@@ -79,12 +97,21 @@ function KitchenDashboard() {
                     </ul>
                     <div className="mt-4 flex gap-2">
                       {col.key !== "ready" && (
-                        <Button size="sm" className="w-full bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
+                        <Button
+                          size="sm"
+                          onClick={() => advance(o, col.key)}
+                          className="w-full bg-brand-gradient text-primary-foreground shadow-warm"
+                        >
                           {col.key === "pending" ? "Start" : "Mark ready"}
                         </Button>
                       )}
                       {col.key === "ready" && (
-                        <Button size="sm" variant="outline" className="w-full">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => advance(o, col.key)}
+                          className="w-full"
+                        >
                           Bump to pass
                         </Button>
                       )}

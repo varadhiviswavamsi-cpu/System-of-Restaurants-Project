@@ -4,6 +4,8 @@
 import margheritaAsset from "@/assets/wood-fired-margherita.jpg.asset.json";
 import truffleAsset from "@/assets/truffle-pasta.jpg.asset.json";
 import branzinoAsset from "@/assets/branzino.jpg.asset.json";
+import burrataAsset from "@/assets/burrata-peach.jpg.asset.json";
+
 
 
 

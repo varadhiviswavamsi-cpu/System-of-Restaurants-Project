@@ -2,10 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { SearchInput } from "@/components/ui/search-input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { inventory } from "@/lib/mock-data";
-import { AlertTriangle, PackagePlus, Search } from "lucide-react";
+import { AlertTriangle, PackagePlus } from "lucide-react";
 import { SummaryCard } from "@/components/common/SummaryCard";
 
 export const Route = createFileRoute("/dashboard/inventory")({
@@ -42,10 +42,7 @@ function InventoryPage() {
       <div className="card-elevated p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="font-display text-lg font-semibold">Stock levels</div>
-          <div className="relative w-full max-w-xs">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder="Search items" className="pl-9" />
-          </div>
+          <SearchInput placeholder="Search items" className="w-full max-w-xs" />
         </div>
         <div className="mt-4 overflow-x-auto">
           <Table>

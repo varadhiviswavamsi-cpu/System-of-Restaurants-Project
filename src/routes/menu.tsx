@@ -3,8 +3,7 @@ import { useMemo, useState } from "react";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { menuItems } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { SearchInput } from "@/components/ui/search-input";
 import { StatusBadge } from "@/components/common/StatusBadge";
 
 export const Route = createFileRoute("/menu")({
@@ -37,10 +36,12 @@ function MenuPage() {
             <h1 className="font-display text-4xl font-bold">Tonight's menu</h1>
             <p className="mt-1 text-muted-foreground">Fresh dishes, live availability, seasonal picks.</p>
           </div>
-          <div className="relative w-full max-w-sm">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search dishes" className="pl-9" />
-          </div>
+          <SearchInput
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Search dishes"
+            className="w-full max-w-sm"
+          />
         </div>
 
         <div className="mt-6 flex flex-wrap gap-2">

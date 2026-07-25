@@ -12,6 +12,19 @@ import {
 } from "lucide-react";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,12 +45,48 @@ export const Route = createFileRoute("/")({
 });
 
 const features = [
-  { icon: CalendarClock, title: "Reservations & queue", body: "Live waitlist, SMS-ready callbacks, and smart table matching." },
-  { icon: ChefHat, title: "Kitchen display", body: "Ticket flow with prep timers, station routing, and rush alerts." },
-  { icon: Users, title: "Front-of-house", body: "Floor map, table turns, guest notes and section assignments." },
-  { icon: Package, title: "Inventory", body: "Real-time stock, low-item alerts, and supplier reorder in a click." },
-  { icon: LineChart, title: "Analytics", body: "Covers, revenue, average ticket, and menu performance." },
-  { icon: Sparkles, title: "AI-ready", body: "Plug in AI for demand forecasts, menu tuning, and guest recall." },
+  {
+    icon: CalendarClock,
+    title: "Reservations & queue",
+    body: "Live waitlist, SMS-ready callbacks, and smart table matching.",
+    detail:
+      "Reduce no-shows with automated reminders, let guests join a digital queue from their phones, and match party sizes to the right tables in real time.",
+  },
+  {
+    icon: ChefHat,
+    title: "Kitchen display",
+    body: "Ticket flow with prep timers, station routing, and rush alerts.",
+    detail:
+      "Replace printed tickets with a live KDS. Route orders by station, highlight rush times, and notify servers the moment a dish is ready.",
+  },
+  {
+    icon: Users,
+    title: "Front-of-house",
+    body: "Floor map, table turns, guest notes and section assignments.",
+    detail:
+      "Visualize the dining room, track table status, assign sections, and store guest preferences so every visit feels personal.",
+  },
+  {
+    icon: Package,
+    title: "Inventory",
+    body: "Real-time stock, low-item alerts, and supplier reorder in a click.",
+    detail:
+      "Count stock as it moves, get low-inventory alerts before 86s happen, and generate purchase orders for suppliers with one click.",
+  },
+  {
+    icon: LineChart,
+    title: "Analytics",
+    body: "Covers, revenue, average ticket, and menu performance.",
+    detail:
+      "See daily covers, revenue trends, average ticket size, and top-performing menu items in a clean dashboard built for managers.",
+  },
+  {
+    icon: Sparkles,
+    title: "AI-ready",
+    body: "Plug in AI for demand forecasts, menu tuning, and guest recall.",
+    detail:
+      "Connect forecasting models to predict busy periods, optimize menus, and surface guest insights that help you plan smarter service.",
+  },
 ];
 
 function Landing() {
@@ -145,13 +194,47 @@ function Landing() {
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {features.map((f) => (
-            <div key={f.title} className="card-elevated p-6 transition-transform hover:-translate-y-0.5">
-              <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-gradient text-primary-foreground shadow-warm">
-                <f.icon className="h-5 w-5" />
-              </div>
-              <div className="mt-4 font-display text-lg font-semibold">{f.title}</div>
-              <p className="mt-1 text-sm text-muted-foreground">{f.body}</p>
-            </div>
+            <Dialog key={f.title}>
+              <HoverCard openDelay={150} closeDelay={100}>
+                <HoverCardTrigger asChild>
+                  <DialogTrigger asChild>
+                    <div className="card-elevated cursor-pointer p-6 transition-all hover:-translate-y-0.5 hover:shadow-warm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                      <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-gradient text-primary-foreground shadow-warm">
+                        <f.icon className="h-5 w-5" />
+                      </div>
+                      <div className="mt-4 font-display text-lg font-semibold">{f.title}</div>
+                      <p className="mt-1 text-sm text-muted-foreground">{f.body}</p>
+                    </div>
+                  </DialogTrigger>
+                </HoverCardTrigger>
+                <HoverCardContent side="top" align="start" className="w-72 border-border bg-card text-card-foreground">
+                  <div className="flex items-center gap-2">
+                    <div className="grid h-8 w-8 place-items-center rounded-lg bg-brand-gradient text-primary-foreground">
+                      <f.icon className="h-4 w-4" />
+                    </div>
+                    <span className="font-display text-sm font-semibold">{f.title}</span>
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground">{f.detail}</p>
+                  <p className="mt-2 text-xs text-muted-foreground/80">Click the card to learn more.</p>
+                </HoverCardContent>
+              </HoverCard>
+              <DialogContent className="border-border bg-card text-card-foreground sm:max-w-md">
+                <DialogHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-gradient text-primary-foreground shadow-warm">
+                      <f.icon className="h-5 w-5" />
+                    </div>
+                    <DialogTitle className="font-display text-xl">{f.title}</DialogTitle>
+                  </div>
+                  <DialogDescription className="text-muted-foreground">{f.detail}</DialogDescription>
+                </DialogHeader>
+                <div className="mt-2">
+                  <Button asChild className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
+                    <Link to="/auth/signup">Get started with {f.title}</Link>
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           ))}
         </div>
       </section>

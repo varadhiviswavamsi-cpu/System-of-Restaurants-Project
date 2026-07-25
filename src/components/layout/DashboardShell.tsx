@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { Logo } from "@/components/brand/Logo";
+import { NavHistory } from "@/components/common/NavHistory";
 import {
   Sidebar,
   SidebarContent,

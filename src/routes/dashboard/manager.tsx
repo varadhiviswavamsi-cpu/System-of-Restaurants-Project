@@ -88,7 +88,7 @@ function ManagerDashboard() {
               <span>${Math.round(max * 0.25).toLocaleString()}</span>
               <span>$0</span>
             </div>
-            <div className="flex flex-1 grid-cols-7 items-end gap-3">
+            <div className="grid flex-1 grid-cols-7 items-end gap-3">
               {salesTrend.map((d) => (
                 <div key={d.day} className="flex h-full flex-col items-center gap-2">
                   <div className="flex w-full flex-1 items-end justify-center">

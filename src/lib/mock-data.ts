@@ -1,6 +1,8 @@
 // Central mock data for the RestaurantOS scaffold.
 // Replace with real Supabase queries in later prompts.
 
+import margheritaAsset from "@/assets/wood-fired-margherita.jpg.asset.json";
+
 export type OrderStatus = "pending" | "preparing" | "ready" | "served" | "cancelled";
 export type TableStatus = "available" | "occupied" | "reserved" | "cleaning";
 export type StockStatus = "in-stock" | "low" | "out";
@@ -13,10 +15,11 @@ export interface MenuItem {
   category: string;
   available: boolean;
   emoji: string;
+  image?: string;
 }
 
 export const menuItems: MenuItem[] = [
-  { id: "m1", name: "Wood-fired Margherita", description: "San Marzano tomato, fior di latte, basil", price: 14, category: "Pizza", available: true, emoji: "🍕" },
+  { id: "m1", name: "Wood-fired Margherita", description: "San Marzano tomato, fior di latte, basil", price: 14, category: "Pizza", available: true, emoji: "🍕", image: margheritaAsset.url },
   { id: "m2", name: "Truffle Tagliatelle", description: "Fresh pasta, black truffle, parmigiano", price: 22, category: "Pasta", available: true, emoji: "🍝" },
   { id: "m3", name: "Grilled Branzino", description: "Whole sea bass, lemon, herbs, olive oil", price: 28, category: "Mains", available: true, emoji: "🐟" },
   { id: "m4", name: "Burrata & Peach", description: "Creamy burrata, grilled peach, prosciutto", price: 16, category: "Starters", available: true, emoji: "🧀" },

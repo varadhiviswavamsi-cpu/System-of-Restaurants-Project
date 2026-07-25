@@ -63,7 +63,13 @@ function MenuPage() {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((m) => (
             <div key={m.id} className="card-elevated overflow-hidden">
-              <div className="flex h-32 items-center justify-center bg-brand-gradient text-6xl">{m.emoji}</div>
+              <div className="flex h-32 items-center justify-center overflow-hidden bg-brand-gradient text-6xl">
+                {m.image ? (
+                  <img src={m.image} alt={m.name} className="h-full w-full object-cover" loading="lazy" />
+                ) : (
+                  m.emoji
+                )}
+              </div>
               <div className="p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>

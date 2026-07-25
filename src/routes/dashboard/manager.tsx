@@ -51,23 +51,57 @@ function ManagerDashboard() {
               <div className="font-display text-lg font-semibold">Weekly sales</div>
               <div className="text-xs text-muted-foreground">Revenue by day</div>
             </div>
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/dashboard/analytics">View details</Link>
-            </Button>
-          </div>
-          <div className="mt-6 grid grid-cols-7 items-end gap-3 h-52">
-            {salesTrend.map((d) => (
-              <div key={d.day} className="flex h-full flex-col items-center gap-2">
-                <div className="flex w-full flex-1 items-end">
-                  <div
-                    className="w-full rounded-t-md bg-brand-gradient"
-                    style={{ height: `${(d.sales / max) * 100}%` }}
-                    title={`$${d.sales}`}
-                  />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="sm">View details</Button>
+              </PopoverTrigger>
+              <PopoverContent
+                align="end"
+                sideOffset={8}
+                className="w-72 rounded-2xl border border-white/20 bg-card/35 p-4 shadow-warm backdrop-blur-2xl dark:bg-card/30"
+              >
+                <div className="font-display text-sm font-semibold">Revenue breakdown</div>
+                <div className="mt-3 space-y-2">
+                  {salesTrend.map((d) => (
+                    <div key={d.day} className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">{d.day}</span>
+                      <span className="font-medium">${d.sales.toLocaleString()}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="text-xs text-muted-foreground">{d.day}</div>
-              </div>
-            ))}
+                <div className="mt-4 border-t border-white/20 pt-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Total week</span>
+                    <span className="font-semibold text-primary">
+                      ${salesTrend.reduce((acc, d) => acc + d.sales, 0).toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
+          <div className="mt-6 flex h-52 gap-4">
+            <div className="relative flex h-full flex-col justify-between text-xs text-muted-foreground">
+              <span>${max.toLocaleString()}</span>
+              <span>${Math.round(max * 0.75).toLocaleString()}</span>
+              <span>${Math.round(max * 0.5).toLocaleString()}</span>
+              <span>${Math.round(max * 0.25).toLocaleString()}</span>
+              <span>$0</span>
+            </div>
+            <div className="flex flex-1 grid-cols-7 items-end gap-3">
+              {salesTrend.map((d) => (
+                <div key={d.day} className="flex h-full flex-col items-center gap-2">
+                  <div className="flex w-full flex-1 items-end justify-center">
+                    <div
+                      className="w-8 rounded-t-md bg-brand-gradient"
+                      style={{ height: `${(d.sales / max) * 100}%` }}
+                      title={`$${d.sales}`}
+                    />
+                  </div>
+                  <div className="text-xs text-muted-foreground">{d.day}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

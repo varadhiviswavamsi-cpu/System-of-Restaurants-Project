@@ -138,6 +138,7 @@ export function DashboardShell({
         <div className="flex flex-1 flex-col">
           <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur">
             <SidebarTrigger />
+            <NavHistory />
             <div className="min-w-0 flex-1">
               <div className="truncate font-display text-lg font-semibold">{title}</div>
               {subtitle && <div className="truncate text-xs text-muted-foreground">{subtitle}</div>}

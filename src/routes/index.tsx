@@ -210,7 +210,7 @@ function Landing() {
                 <HoverCardContent
                   side="top"
                   align="start"
-                  className="w-72 border border-white/30 bg-card/70 text-card-foreground shadow-warm backdrop-blur-xl dark:border-white/10 dark:bg-card/60"
+                  className="w-72 border border-white/20 bg-card/35 text-card-foreground shadow-warm backdrop-blur-2xl dark:border-white/10 dark:bg-card/30"
                 >
                   <div className="flex items-center gap-2">
                     <div className="grid h-8 w-8 place-items-center rounded-lg bg-brand-gradient text-primary-foreground">

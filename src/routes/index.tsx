@@ -45,12 +45,48 @@ export const Route = createFileRoute("/")({
 });
 
 const features = [
-  { icon: CalendarClock, title: "Reservations & queue", body: "Live waitlist, SMS-ready callbacks, and smart table matching." },
-  { icon: ChefHat, title: "Kitchen display", body: "Ticket flow with prep timers, station routing, and rush alerts." },
-  { icon: Users, title: "Front-of-house", body: "Floor map, table turns, guest notes and section assignments." },
-  { icon: Package, title: "Inventory", body: "Real-time stock, low-item alerts, and supplier reorder in a click." },
-  { icon: LineChart, title: "Analytics", body: "Covers, revenue, average ticket, and menu performance." },
-  { icon: Sparkles, title: "AI-ready", body: "Plug in AI for demand forecasts, menu tuning, and guest recall." },
+  {
+    icon: CalendarClock,
+    title: "Reservations & queue",
+    body: "Live waitlist, SMS-ready callbacks, and smart table matching.",
+    detail:
+      "Reduce no-shows with automated reminders, let guests join a digital queue from their phones, and match party sizes to the right tables in real time.",
+  },
+  {
+    icon: ChefHat,
+    title: "Kitchen display",
+    body: "Ticket flow with prep timers, station routing, and rush alerts.",
+    detail:
+      "Replace printed tickets with a live KDS. Route orders by station, highlight rush times, and notify servers the moment a dish is ready.",
+  },
+  {
+    icon: Users,
+    title: "Front-of-house",
+    body: "Floor map, table turns, guest notes and section assignments.",
+    detail:
+      "Visualize the dining room, track table status, assign sections, and store guest preferences so every visit feels personal.",
+  },
+  {
+    icon: Package,
+    title: "Inventory",
+    body: "Real-time stock, low-item alerts, and supplier reorder in a click.",
+    detail:
+      "Count stock as it moves, get low-inventory alerts before 86s happen, and generate purchase orders for suppliers with one click.",
+  },
+  {
+    icon: LineChart,
+    title: "Analytics",
+    body: "Covers, revenue, average ticket, and menu performance.",
+    detail:
+      "See daily covers, revenue trends, average ticket size, and top-performing menu items in a clean dashboard built for managers.",
+  },
+  {
+    icon: Sparkles,
+    title: "AI-ready",
+    body: "Plug in AI for demand forecasts, menu tuning, and guest recall.",
+    detail:
+      "Connect forecasting models to predict busy periods, optimize menus, and surface guest insights that help you plan smarter service.",
+  },
 ];
 
 function Landing() {

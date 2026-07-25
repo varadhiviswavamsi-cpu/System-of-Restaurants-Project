@@ -194,13 +194,47 @@ function Landing() {
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {features.map((f) => (
-            <div key={f.title} className="card-elevated p-6 transition-transform hover:-translate-y-0.5">
-              <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-gradient text-primary-foreground shadow-warm">
-                <f.icon className="h-5 w-5" />
-              </div>
-              <div className="mt-4 font-display text-lg font-semibold">{f.title}</div>
-              <p className="mt-1 text-sm text-muted-foreground">{f.body}</p>
-            </div>
+            <Dialog key={f.title}>
+              <HoverCard openDelay={150} closeDelay={100}>
+                <HoverCardTrigger asChild>
+                  <DialogTrigger asChild>
+                    <div className="card-elevated cursor-pointer p-6 transition-all hover:-translate-y-0.5 hover:shadow-warm focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                      <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-gradient text-primary-foreground shadow-warm">
+                        <f.icon className="h-5 w-5" />
+                      </div>
+                      <div className="mt-4 font-display text-lg font-semibold">{f.title}</div>
+                      <p className="mt-1 text-sm text-muted-foreground">{f.body}</p>
+                    </div>
+                  </DialogTrigger>
+                </HoverCardTrigger>
+                <HoverCardContent side="top" align="start" className="w-72 border-border bg-card text-card-foreground">
+                  <div className="flex items-center gap-2">
+                    <div className="grid h-8 w-8 place-items-center rounded-lg bg-brand-gradient text-primary-foreground">
+                      <f.icon className="h-4 w-4" />
+                    </div>
+                    <span className="font-display text-sm font-semibold">{f.title}</span>
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground">{f.detail}</p>
+                  <p className="mt-2 text-xs text-muted-foreground/80">Click the card to learn more.</p>
+                </HoverCardContent>
+              </HoverCard>
+              <DialogContent className="border-border bg-card text-card-foreground sm:max-w-md">
+                <DialogHeader>
+                  <div className="flex items-center gap-3">
+                    <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-gradient text-primary-foreground shadow-warm">
+                      <f.icon className="h-5 w-5" />
+                    </div>
+                    <DialogTitle className="font-display text-xl">{f.title}</DialogTitle>
+                  </div>
+                  <DialogDescription className="text-muted-foreground">{f.detail}</DialogDescription>
+                </DialogHeader>
+                <div className="mt-2">
+                  <Button asChild className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
+                    <Link to="/auth/signup">Get started with {f.title}</Link>
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
           ))}
         </div>
       </section>

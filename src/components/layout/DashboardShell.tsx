@@ -59,6 +59,21 @@ const nav = [
   },
 ];
 
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={toggleTheme}
+      aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+      className="h-9 w-9 shrink-0 rounded-full border-border/70 bg-background/80 backdrop-blur-sm hover:bg-accent"
+    >
+      {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+    </Button>
+  );
+}
+
 function AppSidebar() {
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
   return (

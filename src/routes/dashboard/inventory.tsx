@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { inventory } from "@/lib/mock-data";
-import { AlertTriangle, PackagePlus } from "lucide-react";
+import { AlertTriangle, PackagePlus, SearchX } from "lucide-react";
 import { SummaryCard } from "@/components/common/SummaryCard";
 import { EmptyState } from "@/components/common/EmptyState";
 

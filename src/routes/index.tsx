@@ -207,7 +207,11 @@ function Landing() {
                     </div>
                   </DialogTrigger>
                 </HoverCardTrigger>
-                <HoverCardContent side="top" align="start" className="w-72 border-border bg-card text-card-foreground">
+                <HoverCardContent
+                  side="top"
+                  align="start"
+                  className="w-72 border border-white/30 bg-card/70 text-card-foreground shadow-warm backdrop-blur-xl dark:border-white/10 dark:bg-card/60"
+                >
                   <div className="flex items-center gap-2">
                     <div className="grid h-8 w-8 place-items-center rounded-lg bg-brand-gradient text-primary-foreground">
                       <f.icon className="h-4 w-4" />
@@ -215,7 +219,6 @@ function Landing() {
                     <span className="font-display text-sm font-semibold">{f.title}</span>
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground">{f.detail}</p>
-                  <p className="mt-2 text-xs text-muted-foreground/80">Click the card to learn more.</p>
                 </HoverCardContent>
               </HoverCard>
               <DialogContent className="border-border bg-card text-card-foreground sm:max-w-md">

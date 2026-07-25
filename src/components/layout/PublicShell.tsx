@@ -36,6 +36,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
           <Link to="/" className="shrink-0">
             <Logo />
           </Link>
+          <NavHistory />
           <nav className="hidden flex-1 items-center justify-center gap-1 md:flex">
             {links.map((l) => (
               <Link

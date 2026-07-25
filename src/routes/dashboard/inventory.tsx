@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { inventory } from "@/lib/mock-data";
 import { AlertTriangle, PackagePlus } from "lucide-react";
 import { SummaryCard } from "@/components/common/SummaryCard";
+import { EmptyState } from "@/components/common/EmptyState";
+
 
 export const Route = createFileRoute("/dashboard/inventory")({
   head: () => ({

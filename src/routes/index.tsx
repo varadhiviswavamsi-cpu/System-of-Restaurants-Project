@@ -1,24 +1,182 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  ArrowRight,
+  CalendarClock,
+  ChefHat,
+  ClipboardList,
+  LineChart,
+  Package,
+  Sparkles,
+  Users,
+  UtensilsCrossed,
+} from "lucide-react";
+import { PublicShell } from "@/components/layout/PublicShell";
+import { Button } from "@/components/ui/button";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "RestaurantOS — Smart operations for modern restaurants" },
+      {
+        name: "description",
+        content:
+          "RestaurantOS is the all-in-one hospitality suite for reservations, live queues, kitchen flow, inventory, and analytics.",
+      },
+      { property: "og:title", content: "RestaurantOS — Smart operations for modern restaurants" },
+      { property: "og:description", content: "Reservations, queue, kitchen and inventory in one warm, modern platform." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Landing,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const features = [
+  { icon: CalendarClock, title: "Reservations & queue", body: "Live waitlist, SMS-ready callbacks, and smart table matching." },
+  { icon: ChefHat, title: "Kitchen display", body: "Ticket flow with prep timers, station routing, and rush alerts." },
+  { icon: Users, title: "Front-of-house", body: "Floor map, table turns, guest notes and section assignments." },
+  { icon: Package, title: "Inventory", body: "Real-time stock, low-item alerts, and supplier reorder in a click." },
+  { icon: LineChart, title: "Analytics", body: "Covers, revenue, average ticket, and menu performance." },
+  { icon: Sparkles, title: "AI-ready", body: "Plug in AI for demand forecasts, menu tuning, and guest recall." },
+];
+
+function Landing() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <PublicShell>
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-16 md:grid-cols-2 md:py-24 lg:py-28">
+          <div className="flex flex-col justify-center">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+              <Sparkles className="h-3.5 w-3.5" /> Hospitality, reimagined
+            </span>
+            <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] tracking-tight md:text-6xl">
+              Run a warmer, <span className="text-brand-gradient">smarter</span> restaurant.
+            </h1>
+            <p className="mt-5 max-w-xl text-lg text-muted-foreground">
+              RestaurantOS unites reservations, floor, kitchen, inventory, and analytics in one calm,
+              beautiful workspace — so your team can focus on the guest.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button size="lg" asChild className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
+                <Link to="/auth/signup">
+                  Get started <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link to="/auth/login">Sign in</Link>
+              </Button>
+              <Button size="lg" variant="ghost" asChild>
+                <Link to="/dashboard/manager">Explore demo</Link>
+              </Button>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-6 text-sm text-muted-foreground">
+              <div><span className="font-display text-2xl font-bold text-foreground">1,200+</span> venues</div>
+              <div><span className="font-display text-2xl font-bold text-foreground">4.9★</span> team rating</div>
+              <div><span className="font-display text-2xl font-bold text-foreground">30%</span> faster turns</div>
+            </div>
+          </div>
+
+          {/* Visual dashboard mock */}
+          <div className="relative">
+            <div className="card-elevated relative overflow-hidden p-5 shadow-warm">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-xs uppercase tracking-widest text-muted-foreground">Tonight</div>
+                  <div className="font-display text-2xl font-bold">Service at a glance</div>
+                </div>
+                <div className="rounded-full bg-success/20 px-3 py-1 text-xs font-medium text-success ring-1 ring-success/30">
+                  On pace
+                </div>
+              </div>
+              <div className="mt-5 grid grid-cols-3 gap-3">
+                {[
+                  { k: "Covers", v: "202" },
+                  { k: "Revenue", v: "$2,890" },
+                  { k: "Avg wait", v: "12m" },
+                ].map((s) => (
+                  <div key={s.k} className="rounded-xl bg-accent/60 p-3">
+                    <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{s.k}</div>
+                    <div className="font-display text-xl font-bold">{s.v}</div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 grid grid-cols-6 gap-2">
+                {[70, 55, 82, 40, 90, 68].map((h, i) => (
+                  <div key={i} className="flex h-24 items-end">
+                    <div
+                      className="w-full rounded-t-md bg-brand-gradient opacity-90"
+                      style={{ height: `${h}%` }}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 space-y-2">
+                {[
+                  { t: "#1043 · T-11", s: "ready", tone: "bg-success/20 text-success" },
+                  { t: "#1044 · T-02", s: "pending", tone: "bg-warning/25 text-warning-foreground" },
+                  { t: "#1042 · T-04", s: "preparing", tone: "bg-primary/15 text-primary" },
+                ].map((o) => (
+                  <div key={o.t} className="flex items-center justify-between rounded-lg bg-muted/60 px-3 py-2 text-sm">
+                    <span className="font-medium">{o.t}</span>
+                    <span className={`rounded-full px-2 py-0.5 text-xs font-medium capitalize ${o.tone}`}>
+                      {o.s}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="absolute -bottom-6 -left-6 hidden rounded-2xl bg-brand-gradient p-4 text-primary-foreground shadow-warm sm:block">
+              <UtensilsCrossed className="h-6 w-6" />
+              <div className="mt-1 text-xs opacity-90">Kitchen synced</div>
+              <div className="font-display text-lg font-bold">18 tickets live</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="mx-auto w-full max-w-7xl px-4 pb-20">
+        <div className="max-w-2xl">
+          <h2 className="font-display text-3xl font-bold md:text-4xl">Everything your team needs. Nothing they don't.</h2>
+          <p className="mt-3 text-muted-foreground">
+            Built around real hospitality workflows — from the host stand to the pass to the back office.
+          </p>
+        </div>
+        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {features.map((f) => (
+            <div key={f.title} className="card-elevated p-6 transition-transform hover:-translate-y-0.5">
+              <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-gradient text-primary-foreground shadow-warm">
+                <f.icon className="h-5 w-5" />
+              </div>
+              <div className="mt-4 font-display text-lg font-semibold">{f.title}</div>
+              <p className="mt-1 text-sm text-muted-foreground">{f.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="mx-auto w-full max-w-7xl px-4 pb-24">
+        <div className="card-elevated relative overflow-hidden bg-brand-gradient p-10 text-primary-foreground shadow-warm md:p-14">
+          <div className="max-w-2xl">
+            <h3 className="font-display text-3xl font-bold md:text-4xl">Ready for a calmer service?</h3>
+            <p className="mt-2 opacity-90">
+              Spin up a demo restaurant in seconds. Bring the team when you're ready.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button size="lg" variant="secondary" asChild>
+                <Link to="/auth/signup">Create account</Link>
+              </Button>
+              <Button size="lg" variant="outline" className="border-white/40 bg-white/10 text-primary-foreground hover:bg-white/20" asChild>
+                <Link to="/dashboard/manager">
+                  <ClipboardList className="mr-2 h-4 w-4" /> Explore demo
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </PublicShell>
   );
 }

@@ -9,38 +9,213 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReservationsRouteImport } from './routes/reservations'
+import { Route as QueueRouteImport } from './routes/queue'
+import { Route as OrdersRouteImport } from './routes/orders'
+import { Route as MenuRouteImport } from './routes/menu'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardStaffRouteImport } from './routes/dashboard/staff'
+import { Route as DashboardManagerRouteImport } from './routes/dashboard/manager'
+import { Route as DashboardKitchenRouteImport } from './routes/dashboard/kitchen'
+import { Route as DashboardInventoryRouteImport } from './routes/dashboard/inventory'
+import { Route as DashboardAnalyticsRouteImport } from './routes/dashboard/analytics'
+import { Route as AuthSignupRouteImport } from './routes/auth/signup'
+import { Route as AuthLoginRouteImport } from './routes/auth/login'
 
+const ReservationsRoute = ReservationsRouteImport.update({
+  id: '/reservations',
+  path: '/reservations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QueueRoute = QueueRouteImport.update({
+  id: '/queue',
+  path: '/queue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrdersRoute = OrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MenuRoute = MenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardStaffRoute = DashboardStaffRouteImport.update({
+  id: '/dashboard/staff',
+  path: '/dashboard/staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardManagerRoute = DashboardManagerRouteImport.update({
+  id: '/dashboard/manager',
+  path: '/dashboard/manager',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardKitchenRoute = DashboardKitchenRouteImport.update({
+  id: '/dashboard/kitchen',
+  path: '/dashboard/kitchen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardInventoryRoute = DashboardInventoryRouteImport.update({
+  id: '/dashboard/inventory',
+  path: '/dashboard/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardAnalyticsRoute = DashboardAnalyticsRouteImport.update({
+  id: '/dashboard/analytics',
+  path: '/dashboard/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignupRoute = AuthSignupRouteImport.update({
+  id: '/auth/signup',
+  path: '/auth/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/menu': typeof MenuRoute
+  '/orders': typeof OrdersRoute
+  '/queue': typeof QueueRoute
+  '/reservations': typeof ReservationsRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsRoute
+  '/dashboard/inventory': typeof DashboardInventoryRoute
+  '/dashboard/kitchen': typeof DashboardKitchenRoute
+  '/dashboard/manager': typeof DashboardManagerRoute
+  '/dashboard/staff': typeof DashboardStaffRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/menu': typeof MenuRoute
+  '/orders': typeof OrdersRoute
+  '/queue': typeof QueueRoute
+  '/reservations': typeof ReservationsRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsRoute
+  '/dashboard/inventory': typeof DashboardInventoryRoute
+  '/dashboard/kitchen': typeof DashboardKitchenRoute
+  '/dashboard/manager': typeof DashboardManagerRoute
+  '/dashboard/staff': typeof DashboardStaffRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/menu': typeof MenuRoute
+  '/orders': typeof OrdersRoute
+  '/queue': typeof QueueRoute
+  '/reservations': typeof ReservationsRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsRoute
+  '/dashboard/inventory': typeof DashboardInventoryRoute
+  '/dashboard/kitchen': typeof DashboardKitchenRoute
+  '/dashboard/manager': typeof DashboardManagerRoute
+  '/dashboard/staff': typeof DashboardStaffRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/menu'
+    | '/orders'
+    | '/queue'
+    | '/reservations'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/dashboard/analytics'
+    | '/dashboard/inventory'
+    | '/dashboard/kitchen'
+    | '/dashboard/manager'
+    | '/dashboard/staff'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/menu'
+    | '/orders'
+    | '/queue'
+    | '/reservations'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/dashboard/analytics'
+    | '/dashboard/inventory'
+    | '/dashboard/kitchen'
+    | '/dashboard/manager'
+    | '/dashboard/staff'
+  id:
+    | '__root__'
+    | '/'
+    | '/menu'
+    | '/orders'
+    | '/queue'
+    | '/reservations'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/dashboard/analytics'
+    | '/dashboard/inventory'
+    | '/dashboard/kitchen'
+    | '/dashboard/manager'
+    | '/dashboard/staff'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MenuRoute: typeof MenuRoute
+  OrdersRoute: typeof OrdersRoute
+  QueueRoute: typeof QueueRoute
+  ReservationsRoute: typeof ReservationsRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthSignupRoute: typeof AuthSignupRoute
+  DashboardAnalyticsRoute: typeof DashboardAnalyticsRoute
+  DashboardInventoryRoute: typeof DashboardInventoryRoute
+  DashboardKitchenRoute: typeof DashboardKitchenRoute
+  DashboardManagerRoute: typeof DashboardManagerRoute
+  DashboardStaffRoute: typeof DashboardStaffRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reservations': {
+      id: '/reservations'
+      path: '/reservations'
+      fullPath: '/reservations'
+      preLoaderRoute: typeof ReservationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/queue': {
+      id: '/queue'
+      path: '/queue'
+      fullPath: '/queue'
+      preLoaderRoute: typeof QueueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/orders': {
+      id: '/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof OrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/menu': {
+      id: '/menu'
+      path: '/menu'
+      fullPath: '/menu'
+      preLoaderRoute: typeof MenuRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +223,72 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/staff': {
+      id: '/dashboard/staff'
+      path: '/dashboard/staff'
+      fullPath: '/dashboard/staff'
+      preLoaderRoute: typeof DashboardStaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/manager': {
+      id: '/dashboard/manager'
+      path: '/dashboard/manager'
+      fullPath: '/dashboard/manager'
+      preLoaderRoute: typeof DashboardManagerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/kitchen': {
+      id: '/dashboard/kitchen'
+      path: '/dashboard/kitchen'
+      fullPath: '/dashboard/kitchen'
+      preLoaderRoute: typeof DashboardKitchenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/inventory': {
+      id: '/dashboard/inventory'
+      path: '/dashboard/inventory'
+      fullPath: '/dashboard/inventory'
+      preLoaderRoute: typeof DashboardInventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/analytics': {
+      id: '/dashboard/analytics'
+      path: '/dashboard/analytics'
+      fullPath: '/dashboard/analytics'
+      preLoaderRoute: typeof DashboardAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/signup': {
+      id: '/auth/signup'
+      path: '/auth/signup'
+      fullPath: '/auth/signup'
+      preLoaderRoute: typeof AuthSignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MenuRoute: MenuRoute,
+  OrdersRoute: OrdersRoute,
+  QueueRoute: QueueRoute,
+  ReservationsRoute: ReservationsRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthSignupRoute: AuthSignupRoute,
+  DashboardAnalyticsRoute: DashboardAnalyticsRoute,
+  DashboardInventoryRoute: DashboardInventoryRoute,
+  DashboardKitchenRoute: DashboardKitchenRoute,
+  DashboardManagerRoute: DashboardManagerRoute,
+  DashboardStaffRoute: DashboardStaffRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

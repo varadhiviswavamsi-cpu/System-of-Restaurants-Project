@@ -1,9 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { SummaryCard } from "@/components/common/SummaryCard";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { kpis, orders, reservations, salesTrend } from "@/lib/mock-data";
 import { CalendarClock, DollarSign, TrendingUp, Users, Utensils } from "lucide-react";
 

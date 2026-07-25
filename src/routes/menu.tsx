@@ -3,8 +3,7 @@ import { useMemo, useState } from "react";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { menuItems } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { SearchInput } from "@/components/ui/search-input";
 import { StatusBadge } from "@/components/common/StatusBadge";
 
 export const Route = createFileRoute("/menu")({

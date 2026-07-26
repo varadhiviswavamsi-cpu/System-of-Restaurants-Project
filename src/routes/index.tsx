@@ -1,16 +1,19 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import {
   ArrowRight,
   CalendarClock,
   ChefHat,
   ClipboardList,
   LineChart,
+  Loader2,
   Package,
   Sparkles,
   Users,
   UtensilsCrossed,
 } from "lucide-react";
 import { PublicShell } from "@/components/layout/PublicShell";
+import { DEFAULT_ROUTE_FOR_ROLE, useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -90,6 +93,24 @@ const features = [
 ];
 
 function Landing() {
+  const navigate = useNavigate();
+  const { user, role, profile, loading } = useAuth();
+
+  // The landing page is for signed-out visitors only.
+  useEffect(() => {
+    if (loading || !user) return;
+    if (!role || !profile?.onboarded) navigate({ to: "/onboarding", replace: true });
+    else navigate({ to: DEFAULT_ROUTE_FOR_ROLE[role], replace: true });
+  }, [loading, user, role, profile?.onboarded, navigate]);
+
+  if (loading || user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center gap-3 text-muted-foreground">
+        <Loader2 className="h-5 w-5 animate-spin" /> Loading…
+      </div>
+    );
+  }
+
   return (
     <PublicShell>
       {/* Hero */}

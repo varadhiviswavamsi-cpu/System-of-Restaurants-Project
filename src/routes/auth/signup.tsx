@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Logo } from "@/components/brand/Logo";
@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
+import { DEFAULT_ROUTE_FOR_ROLE, useAuth } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/auth/signup")({
   head: () => ({
@@ -44,6 +45,15 @@ function GoogleIcon() {
 
 function Signup() {
   const navigate = useNavigate();
+  const { user, role, profile, loading: authLoading } = useAuth();
+
+  // Already signed in → skip the signup form.
+  useEffect(() => {
+    if (authLoading || !user) return;
+    if (!role || !profile?.onboarded) navigate({ to: "/onboarding", replace: true });
+    else navigate({ to: DEFAULT_ROUTE_FOR_ROLE[role], replace: true });
+  }, [authLoading, user, role, profile?.onboarded, navigate]);
+
   const [fullName, setFullName] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
   const [email, setEmail] = useState("");

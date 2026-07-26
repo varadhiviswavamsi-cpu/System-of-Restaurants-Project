@@ -16,16 +16,24 @@ function TableStatusControl({
   id,
   current,
   guestLabel,
+  hasReservation,
 }: {
   id: string;
   current: TableStatus;
   guestLabel?: string;
+  hasReservation: boolean;
 }) {
   const [choice, setChoice] = useState<TableStatus | null>(null);
 
   const apply = () => {
     if (!choice) {
       toast.error("Pick a status first", { description: "Choose Occupied or Cleaning." });
+      return;
+    }
+    if (choice === "occupied" && !hasReservation) {
+      toast.error("Person didn't reserve yet", {
+        description: `Table ${id} has no reservation — book it before marking it occupied.`,
+      });
       return;
     }
     if (choice === current) {
@@ -218,7 +226,12 @@ function StaffDashboard() {
                       )}
                     </div>
 
-                    <TableStatusControl id={t.id} current={t.status} guestLabel={res?.name ?? t.guests} />
+                    <TableStatusControl
+                      id={t.id}
+                      current={t.status}
+                      guestLabel={res?.name ?? t.guests}
+                      hasReservation={Boolean(res) || t.status === "reserved" || t.status === "occupied"}
+                    />
                   </HoverCardContent>
                 </HoverCard>
               );

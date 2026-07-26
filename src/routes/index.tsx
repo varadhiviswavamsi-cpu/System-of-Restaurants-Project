@@ -256,7 +256,7 @@ function Landing() {
                 <Link to="/auth/signup">Create account</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-white/40 bg-white/10 text-primary-foreground hover:bg-white/20" asChild>
-                <Link to="/dashboard/manager">
+                <Link to="/dashboard/manager" onClick={() => enterSudo()}>
                   <ClipboardList className="mr-2 h-4 w-4" /> Explore demo
                 </Link>
               </Button>

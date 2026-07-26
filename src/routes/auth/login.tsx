@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Logo } from "@/components/brand/Logo";
@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
-import { DEFAULT_ROUTE_FOR_ROLE, type AppRole } from "@/hooks/use-auth";
+import { DEFAULT_ROUTE_FOR_ROLE, useAuth, type AppRole } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/auth/login")({
   head: () => ({

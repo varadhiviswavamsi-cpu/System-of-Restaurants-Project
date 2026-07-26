@@ -1,9 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useRouter } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 
 export function NavHistory({ className }: { className?: string }) {
-  const router = useRouter();
   return (
     <div
       className={cn(

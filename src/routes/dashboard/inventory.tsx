@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { inventory } from "@/lib/mock-data";
-import { AlertTriangle, PackagePlus, SearchX } from "lucide-react";
+import { AlertTriangle, Check, PackagePlus, SearchX } from "lucide-react";
 import { SummaryCard } from "@/components/common/SummaryCard";
 import { EmptyState } from "@/components/common/EmptyState";
 

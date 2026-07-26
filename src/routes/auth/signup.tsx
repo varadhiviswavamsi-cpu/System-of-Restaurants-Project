@@ -39,6 +39,7 @@ function Signup() {
             className="mt-6 space-y-4"
             onSubmit={(e) => {
               e.preventDefault();
+              enterSudo();
               navigate({ to: "/dashboard/manager" });
             }}
           >

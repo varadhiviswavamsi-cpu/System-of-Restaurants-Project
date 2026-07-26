@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Check } from "lucide-react";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { menuItems } from "@/lib/mock-data";
+import { addOrderItem } from "@/lib/orders-store";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import { StatusBadge } from "@/components/common/StatusBadge";

@@ -62,13 +62,13 @@ export interface RestaurantTable {
 
 export const tables: RestaurantTable[] = [
   { id: "T-01", seats: 2, status: "available" },
-  { id: "T-02", seats: 4, status: "occupied", guests: "Rivera, 3" },
-  { id: "T-03", seats: 2, status: "reserved", guests: "Chen • 12:45" },
-  { id: "T-04", seats: 6, status: "occupied", guests: "Nguyen, 5" },
-  { id: "T-05", seats: 4, status: "cleaning" },
+  { id: "T-02", seats: 4, status: "available" },
+  { id: "T-03", seats: 2, status: "available" },
+  { id: "T-04", seats: 6, status: "available" },
+  { id: "T-05", seats: 4, status: "available" },
   { id: "T-06", seats: 2, status: "available" },
-  { id: "T-07", seats: 4, status: "occupied", guests: "Alvarez, 4" },
-  { id: "T-08", seats: 8, status: "reserved", guests: "Patel • 13:15" },
+  { id: "T-07", seats: 4, status: "available" },
+  { id: "T-08", seats: 8, status: "available" },
 ];
 
 export interface InventoryItem {

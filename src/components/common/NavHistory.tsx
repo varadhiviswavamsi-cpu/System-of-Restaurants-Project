@@ -13,7 +13,7 @@ export function NavHistory({ className }: { className?: string }) {
     >
       <button
         type="button"
-        onClick={() => router.history.back()}
+        onClick={() => window.history.back()}
         aria-label="Go back"
         className="grid h-8 w-8 place-items-center rounded-full text-foreground/80 transition-all duration-200 hover:bg-white/25 hover:text-foreground hover:shadow-[0_0_0_1px_rgba(255,255,255,0.75),0_0_18px_-2px_rgba(255,255,255,0.7)] active:scale-95 dark:hover:bg-white/10"
       >

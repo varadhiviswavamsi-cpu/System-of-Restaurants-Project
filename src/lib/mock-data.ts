@@ -45,13 +45,7 @@ export interface Order {
   total: number;
 }
 
-export const orders: Order[] = [
-  { id: "#1042", table: "T-04", items: [{ name: "Margherita", qty: 2 }, { name: "Burrata", qty: 1 }], status: "preparing", placedAt: "12:14", total: 44 },
-  { id: "#1043", table: "T-11", items: [{ name: "Tagliatelle", qty: 1 }, { name: "Tiramisu", qty: 2 }], status: "ready", placedAt: "12:18", total: 40 },
-  { id: "#1044", table: "T-02", items: [{ name: "Branzino", qty: 1 }], status: "pending", placedAt: "12:22", total: 28 },
-  { id: "#1045", table: "T-07", items: [{ name: "Octopus", qty: 1 }, { name: "Margherita", qty: 1 }], status: "served", placedAt: "11:55", total: 33 },
-  { id: "#1046", table: "T-09", items: [{ name: "Tagliatelle", qty: 2 }], status: "preparing", placedAt: "12:25", total: 44 },
-];
+export const orders: Order[] = [];
 
 export interface RestaurantTable {
   id: string;
@@ -89,19 +83,9 @@ export const inventory: InventoryItem[] = [
   { id: "i6", name: "Branzino (whole)", qty: 12, unit: "pcs", status: "in-stock", supplier: "Coastal Fish" },
 ];
 
-export const queueParties = [
-  { id: "q1", name: "Johnson", size: 2, wait: 5, position: 1 },
-  { id: "q2", name: "Kim", size: 4, wait: 15, position: 2 },
-  { id: "q3", name: "Okafor", size: 3, wait: 20, position: 3 },
-  { id: "q4", name: "Silva", size: 6, wait: 35, position: 4 },
-];
+export const queueParties: { id: string; name: string; size: number; wait: number; position: number }[] = [];
 
-export const reservations = [
-  { id: "r1", name: "Chen", time: "12:45", party: 2, table: "T-03", note: "Anniversary" },
-  { id: "r2", name: "Patel", time: "13:15", party: 8, table: "T-08", note: "Birthday" },
-  { id: "r3", name: "Muller", time: "19:00", party: 4, table: "—", note: "" },
-  { id: "r4", name: "Ito", time: "19:30", party: 2, table: "—", note: "Window seat" },
-];
+export const reservations: { id: string; name: string; time: string; party: number; table: string; note: string }[] = [];
 
 export const salesTrend = [
   { day: "Mon", sales: 1240, covers: 88 },

@@ -12,6 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useTheme } from "@/hooks/use-theme";
+import { enterSudo } from "@/lib/sudo";
 
 const links = [
   { to: "/menu", label: "Menu" },

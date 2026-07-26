@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Logo } from "@/components/brand/Logo";
@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
-import { DEFAULT_ROUTE_FOR_ROLE, type AppRole } from "@/hooks/use-auth";
+import { DEFAULT_ROUTE_FOR_ROLE, useAuth, type AppRole } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/auth/login")({
   head: () => ({
@@ -53,11 +53,20 @@ async function routeAfterLogin(navigate: ReturnType<typeof useNavigate>) {
 
 function Login() {
   const navigate = useNavigate();
+  const { user, role, profile, loading: authLoading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+
+  // Already signed in → don't show the form again.
+  useEffect(() => {
+    if (authLoading || !user) return;
+    if (!role || !profile?.onboarded) navigate({ to: "/onboarding", replace: true });
+    else navigate({ to: DEFAULT_ROUTE_FOR_ROLE[role], replace: true });
+  }, [authLoading, user, role, profile?.onboarded, navigate]);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

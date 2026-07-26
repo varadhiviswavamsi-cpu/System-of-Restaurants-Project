@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Sun, Moon, PanelLeft, LogOut, User as UserIcon } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { NavHistory } from "@/components/common/NavHistory";
@@ -112,7 +112,11 @@ function MenuTrigger() {
 
 function AccountArea() {
   const navigate = useNavigate();
-  const { user, role, profile, signOut } = useAuth();
+  const { user, role, profile, signOut, loading } = useAuth();
+
+  if (loading) {
+    return <div className="h-9 w-9 animate-pulse rounded-full bg-muted" aria-hidden />;
+  }
 
   if (!user) {
     return (
@@ -172,6 +176,17 @@ function AccountArea() {
 }
 
 export function PublicShell({ children }: { children: ReactNode }) {
+  const navigate = useNavigate();
+  const { user, role, profile, loading } = useAuth();
+
+  // Signed in but no role picked yet → send straight to role selection.
+  useEffect(() => {
+    if (loading || !user) return;
+    if (!role || !profile?.onboarded) {
+      navigate({ to: "/onboarding", replace: true });
+    }
+  }, [loading, user, role, profile?.onboarded, navigate]);
+
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-30 border-b bg-background/70 backdrop-blur">

@@ -81,7 +81,7 @@ function MenuTrigger() {
             onClick={() => setOpen(false)}
             className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
-            Open app
+            Enter Sudo
           </Link>
         </nav>
       </SheetContent>
@@ -117,7 +117,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
               <Link to="/auth/login">Sign in</Link>
             </Button>
             <Button size="sm" asChild className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
-              <Link to="/dashboard/manager">Open app</Link>
+              <Link to="/dashboard/manager">Enter Sudo</Link>
             </Button>
           </div>
         </div>

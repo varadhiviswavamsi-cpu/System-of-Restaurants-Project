@@ -33,6 +33,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useTheme } from "@/hooks/use-theme";
+import { exitSudo, useSudo } from "@/lib/sudo";
 
 const nav = [
   {

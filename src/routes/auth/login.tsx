@@ -9,10 +9,10 @@ import { enterSudo } from "@/lib/sudo";
 export const Route = createFileRoute("/auth/login")({
   head: () => ({
     meta: [
-      { title: "Sign in · RestaurantOS" },
-      { name: "description", content: "Sign in to your RestaurantOS workspace." },
-      { property: "og:title", content: "Sign in · RestaurantOS" },
-      { property: "og:description", content: "Sign in to your RestaurantOS workspace." },
+      { title: "Sign in · SoR" },
+      { name: "description", content: "Sign in to your SoR workspace." },
+      { property: "og:title", content: "Sign in · SoR" },
+      { property: "og:description", content: "Sign in to your SoR workspace." },
     ],
   }),
   component: Login,
@@ -39,7 +39,7 @@ function Login() {
             One warm workspace for reservations, floor, kitchen, and inventory.
           </p>
         </div>
-        <div className="text-sm opacity-80">© {new Date().getFullYear()} RestaurantOS</div>
+        <div className="text-sm opacity-80">© {new Date().getFullYear()} SoR</div>
       </div>
       <div className="flex items-center justify-center p-6 md:p-12">
         <div className="w-full max-w-sm">

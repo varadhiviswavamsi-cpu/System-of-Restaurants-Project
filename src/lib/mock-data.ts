@@ -1,4 +1,4 @@
-// Central mock data for the RestaurantOS scaffold.
+// Central mock data for the SoR scaffold.
 // Replace with real Supabase queries in later prompts.
 
 import margheritaAsset from "@/assets/wood-fired-margherita.jpg.asset.json";

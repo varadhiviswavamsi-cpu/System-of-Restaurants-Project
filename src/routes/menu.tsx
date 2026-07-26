@@ -12,9 +12,9 @@ import { StatusBadge } from "@/components/common/StatusBadge";
 export const Route = createFileRoute("/menu")({
   head: () => ({
     meta: [
-      { title: "Menu · RestaurantOS" },
+      { title: "Menu · SoR" },
       { name: "description", content: "Explore the seasonal menu with live availability." },
-      { property: "og:title", content: "Menu · RestaurantOS" },
+      { property: "og:title", content: "Menu · SoR" },
       { property: "og:description", content: "Seasonal menu with live availability." },
     ],
   }),

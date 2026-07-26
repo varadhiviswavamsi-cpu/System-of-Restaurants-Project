@@ -22,9 +22,9 @@ import {
 export const Route = createFileRoute("/queue")({
   head: () => ({
     meta: [
-      { title: "Waiting queue · RestaurantOS" },
+      { title: "Waiting queue · SoR" },
       { name: "description", content: "Join the waitlist and get notified when your table is ready." },
-      { property: "og:title", content: "Waiting queue · RestaurantOS" },
+      { property: "og:title", content: "Waiting queue · SoR" },
       { property: "og:description", content: "Join the waitlist. We'll text when your table is ready." },
     ],
   }),

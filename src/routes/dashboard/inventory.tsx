@@ -32,9 +32,9 @@ import {
 export const Route = createFileRoute("/dashboard/inventory")({
   head: () => ({
     meta: [
-      { title: "Inventory · RestaurantOS" },
+      { title: "Inventory · SoR" },
       { name: "description", content: "Stock levels, low-item alerts and one-click reorders." },
-      { property: "og:title", content: "Inventory · RestaurantOS" },
+      { property: "og:title", content: "Inventory · SoR" },
       { property: "og:description", content: "Stock levels and low-item alerts." },
     ],
   }),

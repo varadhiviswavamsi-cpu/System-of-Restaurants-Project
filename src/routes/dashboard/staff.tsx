@@ -12,9 +12,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/dashboard/staff")({
   head: () => ({
     meta: [
-      { title: "Staff floor · RestaurantOS" },
+      { title: "Staff floor · SoR" },
       { name: "description", content: "Floor map, table status, and open tickets for front-of-house staff." },
-      { property: "og:title", content: "Staff floor · RestaurantOS" },
+      { property: "og:title", content: "Staff floor · SoR" },
       { property: "og:description", content: "Floor map, tables and open tickets." },
     ],
   }),

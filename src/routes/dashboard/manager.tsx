@@ -13,9 +13,9 @@ import { CalendarClock, DollarSign, TrendingUp, Users, Utensils } from "lucide-r
 export const Route = createFileRoute("/dashboard/manager")({
   head: () => ({
     meta: [
-      { title: "Manager dashboard · RestaurantOS" },
+      { title: "Manager dashboard · SoR" },
       { name: "description", content: "Revenue, covers, reservations and service pulse at a glance." },
-      { property: "og:title", content: "Manager dashboard · RestaurantOS" },
+      { property: "og:title", content: "Manager dashboard · SoR" },
       { property: "og:description", content: "Revenue, covers and service pulse at a glance." },
     ],
   }),

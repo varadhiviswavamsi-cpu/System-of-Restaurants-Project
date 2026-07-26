@@ -176,6 +176,17 @@ function AccountArea() {
 }
 
 export function PublicShell({ children }: { children: ReactNode }) {
+  const navigate = useNavigate();
+  const { user, role, profile, loading } = useAuth();
+
+  // Signed in but no role picked yet → send straight to role selection.
+  useEffect(() => {
+    if (loading || !user) return;
+    if (!role || !profile?.onboarded) {
+      navigate({ to: "/onboarding", replace: true });
+    }
+  }, [loading, user, role, profile?.onboarded, navigate]);
+
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-30 border-b bg-background/70 backdrop-blur">

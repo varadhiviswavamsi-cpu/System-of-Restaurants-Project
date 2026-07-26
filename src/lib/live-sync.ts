@@ -15,7 +15,7 @@ import { useSyncExternalStore } from "react";
  */
 
 const CHANNEL_NAME = "sor-live-sync";
-const PREFIX = "sor:";
+const PREFIX = "sor:v2:";
 
 type Message = { key: string; value: unknown; origin: string };
 

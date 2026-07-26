@@ -32,7 +32,10 @@ const statusRing: Record<string, string> = {
 
 function StaffDashboard() {
   const allOrders = useAllOrders();
+  const tables = useTables();
+  const reservations = useReservations();
   const openOrders = allOrders.filter((o) => o.status !== "served" && o.status !== "cancelled");
+
   return (
     <DashboardShell
       title="Staff floor"

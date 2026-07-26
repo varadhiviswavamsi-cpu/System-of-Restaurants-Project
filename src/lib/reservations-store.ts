@@ -1,10 +1,10 @@
-import { useSyncExternalStore } from "react";
 import {
   reservations as seedReservations,
   tables as seedTables,
   type RestaurantTable,
   type TableStatus,
 } from "./mock-data";
+import { createSyncedStore } from "./live-sync";
 
 export type Reservation = {
   id: string;
@@ -16,37 +16,31 @@ export type Reservation = {
   userAdded?: boolean;
 };
 
-let reservations: Reservation[] = (seedReservations as Reservation[]).map((r) => ({ ...r }));
-let tables: RestaurantTable[] = seedTables.map((t) => ({ ...t }));
-
-const listeners = new Set<() => void>();
-function emit() {
-  reservations = [...reservations];
-  tables = [...tables];
-  listeners.forEach((l) => l());
-}
-
-function subscribe(l: () => void) {
-  listeners.add(l);
-  return () => listeners.delete(l);
-}
+const reservationsStore = createSyncedStore<Reservation[]>(
+  "reservations",
+  (seedReservations as Reservation[]).map((r) => ({ ...r })),
+);
+const tablesStore = createSyncedStore<RestaurantTable[]>(
+  "tables",
+  seedTables.map((t) => ({ ...t })),
+);
 
 /** Pick a table that can fit the party and isn't taken. */
 function pickTable(party: number) {
-  const free = tables
+  const free = tablesStore
+    .get()
     .filter((t) => t.status === "available" && t.seats >= party)
     .sort((a, b) => a.seats - b.seats);
   return free[0]?.id;
 }
 
 function setTable(id: string, status: TableStatus, guests?: string) {
-  tables = tables.map((t) => (t.id === id ? { ...t, status, guests } : t));
+  tablesStore.set((prev) => prev.map((t) => (t.id === id ? { ...t, status, guests } : t)));
 }
 
 /** Change a table's status from the floor map, keeping any guest/reservation label. */
 export function setTableStatus(id: string, status: TableStatus) {
-  tables = tables.map((t) => (t.id === id ? { ...t, status } : t));
-  emit();
+  tablesStore.set((prev) => prev.map((t) => (t.id === id ? { ...t, status } : t)));
 }
 
 export function addReservation(input: {
@@ -65,37 +59,29 @@ export function addReservation(input: {
     note: input.note,
     userAdded: true,
   };
-  reservations = [created, ...reservations];
+  reservationsStore.set((prev) => [created, ...prev]);
   if (tableId) {
     setTable(tableId, "reserved", `${input.name} • ${created.time}`);
   }
-  emit();
   return created;
 }
 
 export function cancelUserReservation(): Reservation | undefined {
-  const idx = reservations.findIndex((r) => r.userAdded);
+  const current = reservationsStore.get();
+  const idx = current.findIndex((r) => r.userAdded);
   if (idx === -1) return undefined;
-  const removed = reservations[idx];
-  reservations = reservations.filter((_, i) => i !== idx);
+  const removed = current[idx];
+  reservationsStore.set(current.filter((_, i) => i !== idx));
   if (removed.table !== "—") {
     setTable(removed.table, "available", undefined);
   }
-  emit();
   return removed;
 }
 
-function getReservations() {
-  return reservations;
-}
-function getTables() {
-  return tables;
-}
-
 export function useReservations() {
-  return useSyncExternalStore(subscribe, getReservations, getReservations);
+  return reservationsStore.use();
 }
 
 export function useTables() {
-  return useSyncExternalStore(subscribe, getTables, getTables);
+  return tablesStore.use();
 }

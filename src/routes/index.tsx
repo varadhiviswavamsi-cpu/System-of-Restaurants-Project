@@ -90,6 +90,24 @@ const features = [
 ];
 
 function Landing() {
+  const navigate = useNavigate();
+  const { user, role, profile, loading } = useAuth();
+
+  // The landing page is for signed-out visitors only.
+  useEffect(() => {
+    if (loading || !user) return;
+    if (!role || !profile?.onboarded) navigate({ to: "/onboarding", replace: true });
+    else navigate({ to: DEFAULT_ROUTE_FOR_ROLE[role], replace: true });
+  }, [loading, user, role, profile?.onboarded, navigate]);
+
+  if (loading || user) {
+    return (
+      <div className="flex min-h-screen items-center justify-center gap-3 text-muted-foreground">
+        <Loader2 className="h-5 w-5 animate-spin" /> Loading…
+      </div>
+    );
+  }
+
   return (
     <PublicShell>
       {/* Hero */}

@@ -98,6 +98,20 @@ function AppSidebar({ role }: { role: AppRole }) {
         <Logo />
       </SidebarHeader>
       <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={currentPath === "/"}>
+                  <Link to="/">
+                    <Home />
+                    <span>Home</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
         {nav.map((group) => {
           const items = group.items.filter((i) => !i.roles || i.roles.includes(role));
           if (items.length === 0) return null;
@@ -121,21 +135,8 @@ function AppSidebar({ role }: { role: AppRole }) {
             </SidebarGroup>
           );
         })}
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link to="/">
-                    <Home />
-                    <span>Landing</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
       </SidebarContent>
+
     </Sidebar>
   );
 }

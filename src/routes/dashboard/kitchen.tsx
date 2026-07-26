@@ -37,6 +37,8 @@ const nextStatus: Record<"pending" | "preparing" | "ready", { status: OrderStatu
 
 function KitchenDashboard() {
   const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const [station, setStation] = useState<Station>("Pass");
+  const [stationOpen, setStationOpen] = useState(false);
 
   const advance = (order: Order, from: "pending" | "preparing" | "ready") => {
     const next = nextStatus[from];
@@ -46,14 +48,51 @@ function KitchenDashboard() {
     });
   };
 
+  const pickStation = (s: Station) => {
+    setStation(s);
+    setStationOpen(false);
+    toast.success(`Station changed to ${s}`, {
+      className:
+        "border border-white/40 bg-white/15 text-foreground shadow-[0_10px_40px_-12px_rgba(0,0,0,0.35)] backdrop-blur-2xl",
+    });
+  };
+
   return (
     <DashboardShell
       title="Kitchen display"
-      subtitle="Live tickets · Station: pass"
+      subtitle={`Live tickets · Station: ${station.toLowerCase()}`}
       actions={
-        <Button size="sm" variant="outline">
-          <ChefHat className="mr-1 h-4 w-4" /> Change station
-        </Button>
+        <Popover open={stationOpen} onOpenChange={setStationOpen}>
+          <PopoverTrigger asChild>
+            <Button size="sm" variant="outline">
+              <ChefHat className="mr-1 h-4 w-4" /> Change station
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            align="end"
+            className="w-56 border border-white/40 bg-white/15 p-2 text-foreground shadow-[0_10px_40px_-12px_rgba(0,0,0,0.35)] backdrop-blur-2xl dark:border-white/15 dark:bg-white/10"
+          >
+            <div className="px-2 pb-2 pt-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              Select station
+            </div>
+            <div className="space-y-1">
+              {STATIONS.map((s) => {
+                const active = s === station;
+                return (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => pickStation(s)}
+                    className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-white/25 dark:hover:bg-white/10"
+                  >
+                    <span>{s}</span>
+                    {active && <Check className="h-4 w-4 text-primary" />}
+                  </button>
+                );
+              })}
+            </div>
+          </PopoverContent>
+        </Popover>
       }
     >
       <div className="grid gap-4 lg:grid-cols-3">

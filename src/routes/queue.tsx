@@ -77,7 +77,7 @@ function QueuePage() {
 
   const handleCancelClick = () => {
     if (!hasMine) {
-      toast.error("You're not in the queue...", {
+      toast.error("You didn't join the waitlist", {
         description: "There's no active queue entry to cancel. Please join the queue first.",
       });
       return;

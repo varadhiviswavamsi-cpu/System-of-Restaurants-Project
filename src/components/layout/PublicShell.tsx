@@ -128,7 +128,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
         <div className="mx-auto flex w-full max-w-7xl flex-col items-start justify-between gap-4 px-4 py-8 sm:flex-row sm:items-center">
           <Logo />
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} RestaurantOS. Crafted for hospitality teams.
+            © {new Date().getFullYear()} SoR. Crafted for hospitality teams.
           </p>
         </div>
       </footer>

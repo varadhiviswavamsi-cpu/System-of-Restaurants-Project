@@ -140,7 +140,7 @@ function QueuePage() {
                     Cancel queue
                   </Button>
                 </AlertDialogTrigger>
-                <AlertDialogContent className="border-white/40 bg-card/35 backdrop-blur-2xl shadow-[0_20px_60px_-20px_rgba(0,0,0,0.35)] ring-1 ring-white/30">
+                <AlertDialogContent className="border-white/50 bg-card/60 bg-gradient-to-b from-white/20 to-transparent backdrop-blur-2xl shadow-[0_24px_70px_-16px_rgba(0,0,0,0.3)] ring-1 ring-white/40">
                   <AlertDialogHeader>
                     <AlertDialogTitle className="font-display">Are you sure you want to cancel?</AlertDialogTitle>
                     <AlertDialogDescription>

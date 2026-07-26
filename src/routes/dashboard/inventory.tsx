@@ -104,9 +104,41 @@ function InventoryPage() {
                     <TableCell className="text-muted-foreground">{i.supplier}</TableCell>
                     <TableCell><StatusBadge status={i.status} /></TableCell>
                     <TableCell className="text-right">
-                      <Button size="sm" variant={i.status === "in-stock" ? "ghost" : "default"} className={i.status !== "in-stock" ? "bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95" : ""}>
-                        {i.status === "in-stock" ? "Adjust" : "Reorder"}
-                      </Button>
+                      {(() => {
+                        const done = actioned[i.id];
+                        const kind: "reorder" | "adjust" = i.status === "in-stock" ? "adjust" : "reorder";
+                        const label = done
+                          ? done === "reordered"
+                            ? "Reordered"
+                            : "Adjusted"
+                          : kind === "reorder"
+                            ? "Reorder"
+                            : "Adjust";
+                        return (
+                          <Button
+                            size="sm"
+                            disabled={!!done}
+                            onClick={() => handleAction(i.id, i.name, kind)}
+                            className={
+                              done
+                                ? "bg-green-600 text-white shadow-warm hover:bg-green-600 disabled:opacity-100"
+                                : kind === "reorder"
+                                  ? "bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95"
+                                  : ""
+                            }
+                            variant={done || kind === "reorder" ? "default" : "ghost"}
+                          >
+                            {done ? (
+                              <>
+                                <Check className="mr-1 h-4 w-4" strokeWidth={3} />
+                                {label}
+                              </>
+                            ) : (
+                              label
+                            )}
+                          </Button>
+                        );
+                      })()}
                     </TableCell>
                   </TableRow>
                 ))}

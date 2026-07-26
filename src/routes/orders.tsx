@@ -4,6 +4,7 @@ import { StatusBadge } from "@/components/common/StatusBadge";
 import { EmptyState } from "@/components/common/EmptyState";
 import { Button } from "@/components/ui/button";
 import { useAllOrders, useUserOrders } from "@/lib/orders-store";
+import type { Order } from "@/lib/mock-data";
 import { CheckCircle2, ChefHat, Clock, Utensils, UtensilsCrossed } from "lucide-react";
 
 export const Route = createFileRoute("/orders")({

@@ -9,6 +9,13 @@ import { useAllOrders, updateOrderStatus } from "@/lib/orders-store";
 import { CheckCircle2, ChefHat, Check, Flame, Timer } from "lucide-react";
 import { toast } from "sonner";
 
+// Stable per-ticket prep minutes so the badge doesn't jump on re-render.
+function stableMinutes(id: string) {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return (h % 8) + 3;
+}
+
 const STATIONS = ["Pass", "Grill", "Sauté", "Cold", "Pastry", "Expo"] as const;
 type Station = (typeof STATIONS)[number];
 
@@ -128,8 +135,9 @@ function KitchenDashboard() {
                         <div className="text-xs text-muted-foreground">Table {o.table} · {o.placedAt}</div>
                       </div>
                       <div className="rounded-md bg-warning/25 px-2 py-0.5 text-xs font-medium text-warning-foreground">
-                        {Math.floor(Math.random() * 8) + 3}m
+                        {stableMinutes(o.id)}m
                       </div>
+
                     </div>
                     <ul className="mt-3 space-y-1 text-sm">
                       {o.items.map((it) => (

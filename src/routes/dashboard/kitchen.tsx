@@ -135,8 +135,9 @@ function KitchenDashboard() {
                         <div className="text-xs text-muted-foreground">Table {o.table} · {o.placedAt}</div>
                       </div>
                       <div className="rounded-md bg-warning/25 px-2 py-0.5 text-xs font-medium text-warning-foreground">
-                        {Math.floor(Math.random() * 8) + 3}m
+                        {stableMinutes(o.id)}m
                       </div>
+
                     </div>
                     <ul className="mt-3 space-y-1 text-sm">
                       {o.items.map((it) => (

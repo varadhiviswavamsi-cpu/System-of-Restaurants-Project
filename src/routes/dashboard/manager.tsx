@@ -23,6 +23,7 @@ export const Route = createFileRoute("/dashboard/manager")({
 });
 
 function ManagerDashboard() {
+  const orders = useAllOrders();
   const max = Math.max(...salesTrend.map((d) => d.sales));
   return (
     <DashboardShell
@@ -33,7 +34,15 @@ function ManagerDashboard() {
           <Button variant="outline" size="sm" asChild>
             <Link to="/dashboard/analytics">Analytics</Link>
           </Button>
-          <Button size="sm" className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
+          <Button
+            size="sm"
+            onClick={() =>
+              toast.success("New shift started", {
+                description: "Roster synced and clock-ins are now accepted.",
+              })
+            }
+            className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95"
+          >
             New shift
           </Button>
         </>

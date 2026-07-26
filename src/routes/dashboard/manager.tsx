@@ -5,7 +5,9 @@ import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { kpis, orders, reservations, salesTrend } from "@/lib/mock-data";
+import { kpis, reservations, salesTrend } from "@/lib/mock-data";
+import { useAllOrders } from "@/lib/orders-store";
+import { toast } from "sonner";
 import { CalendarClock, DollarSign, TrendingUp, Users, Utensils } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/manager")({

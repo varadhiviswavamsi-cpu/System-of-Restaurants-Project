@@ -4,6 +4,7 @@ import { StatusBadge } from "@/components/common/StatusBadge";
 import { EmptyState } from "@/components/common/EmptyState";
 import { Button } from "@/components/ui/button";
 import { useAllOrders, useUserOrders } from "@/lib/orders-store";
+import type { Order } from "@/lib/mock-data";
 import { CheckCircle2, ChefHat, Clock, Utensils, UtensilsCrossed } from "lucide-react";
 
 export const Route = createFileRoute("/orders")({
@@ -25,11 +26,34 @@ const steps = [
   { key: "served", label: "Served", icon: CheckCircle2 },
 ];
 
+function OrderCard({ order: o }: { order: Order }) {
+  return (
+    <div className="card-elevated grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-4">
+      <div className="min-w-0">
+        <div className="truncate font-semibold">{o.id}</div>
+        <div className="truncate text-xs text-muted-foreground">
+          Table {o.table} · {o.placedAt}
+        </div>
+        {o.items.length > 0 && (
+          <div className="mt-1 truncate text-xs text-muted-foreground">
+            {o.items.map((it) => `${it.name} ×${it.qty}`).join(", ")}
+          </div>
+        )}
+      </div>
+      <StatusBadge status={o.status} />
+    </div>
+  );
+}
+
 function OrdersPage() {
   const userOrders = useUserOrders();
   const all = useAllOrders();
   const active = userOrders[0] ?? all[0];
   const currentIdx = steps.findIndex((s) => s.key === active?.status);
+  const userIds = new Set(userOrders.map((o) => o.id));
+  const yourOthers = userOrders.filter((o) => o.id !== active?.id);
+  const recent = all.filter((o) => o.id !== active?.id && !userIds.has(o.id));
+
 
   return (
     <PublicShell>
@@ -110,32 +134,28 @@ function OrdersPage() {
           </div>
         )}
 
-        <div className="mt-8 md:mt-10">
-          <h2 className="font-display text-lg font-semibold sm:text-xl">
-            {userOrders.length > 0 ? "Your orders & recent tickets" : "Recent orders"}
-          </h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {all.slice(active ? 1 : 0).map((o) => (
-              <div
-                key={o.id}
-                className="card-elevated grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-4"
-              >
-                <div className="min-w-0">
-                  <div className="truncate font-semibold">{o.id}</div>
-                  <div className="truncate text-xs text-muted-foreground">
-                    Table {o.table} · {o.placedAt}
-                  </div>
-                  {o.items.length > 0 && (
-                    <div className="mt-1 truncate text-xs text-muted-foreground">
-                      {o.items.map((it) => `${it.name} ×${it.qty}`).join(", ")}
-                    </div>
-                  )}
-                </div>
-                <StatusBadge status={o.status} />
-              </div>
-            ))}
+        {yourOthers.length > 0 && (
+          <div className="mt-8 md:mt-10">
+            <h2 className="font-display text-lg font-semibold sm:text-xl">Your orders</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {yourOthers.map((o) => (
+                <OrderCard key={o.id} order={o} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {recent.length > 0 && (
+          <div className="mt-8 md:mt-10">
+            <h2 className="font-display text-lg font-semibold sm:text-xl">Recent tickets</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {recent.map((o) => (
+                <OrderCard key={o.id} order={o} />
+              ))}
+            </div>
+          </div>
+        )}
+
       </section>
     </PublicShell>
   );

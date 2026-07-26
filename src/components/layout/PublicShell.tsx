@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Sun, Moon, PanelLeft, LogOut, User as UserIcon } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { NavHistory } from "@/components/common/NavHistory";

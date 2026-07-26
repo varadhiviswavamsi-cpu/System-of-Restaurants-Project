@@ -4,7 +4,13 @@ import { PublicShell } from "@/components/layout/PublicShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { reservations as seedReservations } from "@/lib/mock-data";
+import {
+  addReservation,
+  cancelUserReservation,
+  useReservations,
+  type Reservation,
+} from "@/lib/reservations-store";
+
 import { CalendarClock } from "lucide-react";
 import { toast } from "sonner";
 import {

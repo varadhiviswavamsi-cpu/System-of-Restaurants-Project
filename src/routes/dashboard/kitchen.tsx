@@ -4,7 +4,8 @@ import { DashboardShell } from "@/components/layout/DashboardShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { orders as initialOrders, type Order, type OrderStatus } from "@/lib/mock-data";
+import { type Order, type OrderStatus } from "@/lib/mock-data";
+import { useAllOrders, updateOrderStatus } from "@/lib/orders-store";
 import { CheckCircle2, ChefHat, Check, Flame, Timer } from "lucide-react";
 import { toast } from "sonner";
 

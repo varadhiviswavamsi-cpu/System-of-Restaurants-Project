@@ -10,6 +10,7 @@ import {
   Clock,
   ClipboardList,
   Home,
+  Sparkles,
   Sun,
   Moon,
   LogOut,

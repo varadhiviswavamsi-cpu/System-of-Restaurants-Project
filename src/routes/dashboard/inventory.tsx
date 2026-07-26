@@ -26,6 +26,7 @@ export const Route = createFileRoute("/dashboard/inventory")({
 
 function InventoryPage() {
   const [q, setQ] = useState("");
+  const [actioned, setActioned] = useState<Record<string, "reordered" | "adjusted">>({});
   const low = inventory.filter((i) => i.status !== "in-stock").length;
   const total = inventory.length;
   const filtered = inventory.filter((i) => {
@@ -37,6 +38,24 @@ function InventoryPage() {
       i.status.toLowerCase().includes(s)
     );
   });
+
+  const handleAction = (id: string, name: string, kind: "reorder" | "adjust") => {
+    if (actioned[id]) return;
+    setActioned((prev) => ({ ...prev, [id]: kind === "reorder" ? "reordered" : "adjusted" }));
+    if (kind === "reorder") {
+      toast.success(`Reorder placed for ${name}`, {
+        description: "Supplier notified. Estimated delivery in 24–48 hours.",
+        className:
+          "backdrop-blur-2xl bg-card/40 border border-white/50 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.35)]",
+      });
+    } else {
+      toast.success(`${name} stock adjusted`, {
+        description: "Inventory count updated successfully.",
+        className:
+          "backdrop-blur-2xl bg-card/40 border border-white/50 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.35)]",
+      });
+    }
+  };
   return (
     <DashboardShell
       title="Inventory"

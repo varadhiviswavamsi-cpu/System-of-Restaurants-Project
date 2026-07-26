@@ -11,7 +11,6 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { PublicShell } from "@/components/layout/PublicShell";
-import { enterSudo } from "@/lib/sudo";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -115,9 +114,6 @@ function Landing() {
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <Link to="/auth/login">Sign in</Link>
-              </Button>
-              <Button size="lg" variant="ghost" asChild>
-                <Link to="/dashboard/manager" onClick={() => enterSudo()}>Explore demo</Link>
               </Button>
             </div>
             <div className="mt-8 flex flex-wrap gap-6 text-sm text-muted-foreground">
@@ -256,8 +252,8 @@ function Landing() {
                 <Link to="/auth/signup">Create account</Link>
               </Button>
               <Button size="lg" variant="outline" className="border-white/40 bg-white/10 text-primary-foreground hover:bg-white/20" asChild>
-                <Link to="/dashboard/manager" onClick={() => enterSudo()}>
-                  <ClipboardList className="mr-2 h-4 w-4" /> Explore demo
+                <Link to="/auth/login">
+                  <ClipboardList className="mr-2 h-4 w-4" /> Sign in
                 </Link>
               </Button>
             </div>

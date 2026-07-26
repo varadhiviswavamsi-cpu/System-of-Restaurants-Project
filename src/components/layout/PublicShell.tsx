@@ -79,7 +79,7 @@ function MenuTrigger() {
           </Link>
           <Link
             to="/dashboard/manager"
-            onClick={() => setOpen(false)}
+            onClick={() => { enterSudo(); setOpen(false); }}
             className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             Enter Sudo

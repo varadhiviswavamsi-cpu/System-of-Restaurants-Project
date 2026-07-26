@@ -20,6 +20,7 @@ import { Route as DashboardManagerRouteImport } from './routes/dashboard/manager
 import { Route as DashboardKitchenRouteImport } from './routes/dashboard/kitchen'
 import { Route as DashboardInventoryRouteImport } from './routes/dashboard/inventory'
 import { Route as DashboardAnalyticsRouteImport } from './routes/dashboard/analytics'
+import { Route as DashboardAiInsightsRouteImport } from './routes/dashboard/ai-insights'
 import { Route as AuthSignupRouteImport } from './routes/auth/signup'
 import { Route as AuthResetPasswordRouteImport } from './routes/auth/reset-password'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
@@ -81,6 +82,11 @@ const DashboardAnalyticsRoute = DashboardAnalyticsRouteImport.update({
   path: '/dashboard/analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardAiInsightsRoute = DashboardAiInsightsRouteImport.update({
+  id: '/dashboard/ai-insights',
+  path: '/dashboard/ai-insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
   id: '/auth/signup',
   path: '/auth/signup',
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/ai-insights': typeof DashboardAiInsightsRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/inventory': typeof DashboardInventoryRoute
   '/dashboard/kitchen': typeof DashboardKitchenRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/ai-insights': typeof DashboardAiInsightsRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/inventory': typeof DashboardInventoryRoute
   '/dashboard/kitchen': typeof DashboardKitchenRoute
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/auth/login': typeof AuthLoginRoute
   '/auth/reset-password': typeof AuthResetPasswordRoute
   '/auth/signup': typeof AuthSignupRoute
+  '/dashboard/ai-insights': typeof DashboardAiInsightsRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/inventory': typeof DashboardInventoryRoute
   '/dashboard/kitchen': typeof DashboardKitchenRoute
@@ -176,6 +185,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/reset-password'
     | '/auth/signup'
+    | '/dashboard/ai-insights'
     | '/dashboard/analytics'
     | '/dashboard/inventory'
     | '/dashboard/kitchen'
@@ -194,6 +204,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/reset-password'
     | '/auth/signup'
+    | '/dashboard/ai-insights'
     | '/dashboard/analytics'
     | '/dashboard/inventory'
     | '/dashboard/kitchen'
@@ -212,6 +223,7 @@ export interface FileRouteTypes {
     | '/auth/login'
     | '/auth/reset-password'
     | '/auth/signup'
+    | '/dashboard/ai-insights'
     | '/dashboard/analytics'
     | '/dashboard/inventory'
     | '/dashboard/kitchen'
@@ -231,6 +243,7 @@ export interface RootRouteChildren {
   AuthLoginRoute: typeof AuthLoginRoute
   AuthResetPasswordRoute: typeof AuthResetPasswordRoute
   AuthSignupRoute: typeof AuthSignupRoute
+  DashboardAiInsightsRoute: typeof DashboardAiInsightsRoute
   DashboardAnalyticsRoute: typeof DashboardAnalyticsRoute
   DashboardInventoryRoute: typeof DashboardInventoryRoute
   DashboardKitchenRoute: typeof DashboardKitchenRoute
@@ -317,6 +330,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/ai-insights': {
+      id: '/dashboard/ai-insights'
+      path: '/dashboard/ai-insights'
+      fullPath: '/dashboard/ai-insights'
+      preLoaderRoute: typeof DashboardAiInsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/signup': {
       id: '/auth/signup'
       path: '/auth/signup'
@@ -367,6 +387,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthLoginRoute: AuthLoginRoute,
   AuthResetPasswordRoute: AuthResetPasswordRoute,
   AuthSignupRoute: AuthSignupRoute,
+  DashboardAiInsightsRoute: DashboardAiInsightsRoute,
   DashboardAnalyticsRoute: DashboardAnalyticsRoute,
   DashboardInventoryRoute: DashboardInventoryRoute,
   DashboardKitchenRoute: DashboardKitchenRoute,

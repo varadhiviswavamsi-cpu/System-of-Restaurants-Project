@@ -32,6 +32,9 @@ function ManagerDashboard() {
       actions={
         <>
           <Button variant="outline" size="sm" asChild>
+            <Link to="/dashboard/ai-insights">AI Insights</Link>
+          </Button>
+          <Button variant="outline" size="sm" asChild>
             <Link to="/dashboard/analytics">Analytics</Link>
           </Button>
           <Button

@@ -37,13 +37,13 @@ const nextStatus: Record<"pending" | "preparing" | "ready", { status: OrderStatu
 };
 
 function KitchenDashboard() {
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const orders = useAllOrders();
   const [station, setStation] = useState<Station>("Pass");
   const [stationOpen, setStationOpen] = useState(false);
 
   const advance = (order: Order, from: "pending" | "preparing" | "ready") => {
     const next = nextStatus[from];
-    setOrders((prev) => prev.map((o) => (o.id === order.id ? { ...o, status: next.status } : o)));
+    updateOrderStatus(order.id, next.status);
     toast.success(`Order ${order.id} ${next.label}`, {
       description: `Table ${order.table}`,
     });

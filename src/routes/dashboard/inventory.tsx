@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { inventory } from "@/lib/mock-data";
-import { AlertTriangle, PackagePlus, SearchX } from "lucide-react";
+import { AlertTriangle, Check, PackagePlus, SearchX } from "lucide-react";
 import { SummaryCard } from "@/components/common/SummaryCard";
 import { EmptyState } from "@/components/common/EmptyState";
 
@@ -25,6 +26,7 @@ export const Route = createFileRoute("/dashboard/inventory")({
 
 function InventoryPage() {
   const [q, setQ] = useState("");
+  const [actioned, setActioned] = useState<Record<string, "reordered" | "adjusted">>({});
   const low = inventory.filter((i) => i.status !== "in-stock").length;
   const total = inventory.length;
   const filtered = inventory.filter((i) => {
@@ -36,6 +38,24 @@ function InventoryPage() {
       i.status.toLowerCase().includes(s)
     );
   });
+
+  const handleAction = (id: string, name: string, kind: "reorder" | "adjust") => {
+    if (actioned[id]) return;
+    setActioned((prev) => ({ ...prev, [id]: kind === "reorder" ? "reordered" : "adjusted" }));
+    if (kind === "reorder") {
+      toast.success(`Reorder placed for ${name}`, {
+        description: "Supplier notified. Estimated delivery in 24–48 hours.",
+        className:
+          "backdrop-blur-2xl bg-card/40 border border-white/50 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.35)]",
+      });
+    } else {
+      toast.success(`${name} stock adjusted`, {
+        description: "Inventory count updated successfully.",
+        className:
+          "backdrop-blur-2xl bg-card/40 border border-white/50 shadow-[0_10px_40px_-12px_rgba(0,0,0,0.35)]",
+      });
+    }
+  };
   return (
     <DashboardShell
       title="Inventory"
@@ -84,9 +104,41 @@ function InventoryPage() {
                     <TableCell className="text-muted-foreground">{i.supplier}</TableCell>
                     <TableCell><StatusBadge status={i.status} /></TableCell>
                     <TableCell className="text-right">
-                      <Button size="sm" variant={i.status === "in-stock" ? "ghost" : "default"} className={i.status !== "in-stock" ? "bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95" : ""}>
-                        {i.status === "in-stock" ? "Adjust" : "Reorder"}
-                      </Button>
+                      {(() => {
+                        const done = actioned[i.id];
+                        const kind: "reorder" | "adjust" = i.status === "in-stock" ? "adjust" : "reorder";
+                        const label = done
+                          ? done === "reordered"
+                            ? "Reordered"
+                            : "Adjusted"
+                          : kind === "reorder"
+                            ? "Reorder"
+                            : "Adjust";
+                        return (
+                          <Button
+                            size="sm"
+                            disabled={!!done}
+                            onClick={() => handleAction(i.id, i.name, kind)}
+                            className={
+                              done
+                                ? "bg-green-600 text-white shadow-warm hover:bg-green-600 disabled:opacity-100"
+                                : kind === "reorder"
+                                  ? "bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95"
+                                  : ""
+                            }
+                            variant={done || kind === "reorder" ? "default" : "ghost"}
+                          >
+                            {done ? (
+                              <>
+                                <Check className="mr-1 h-4 w-4" strokeWidth={3} />
+                                {label}
+                              </>
+                            ) : (
+                              label
+                            )}
+                          </Button>
+                        );
+                      })()}
                     </TableCell>
                   </TableRow>
                 ))}

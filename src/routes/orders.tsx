@@ -3,8 +3,7 @@ import { PublicShell } from "@/components/layout/PublicShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { EmptyState } from "@/components/common/EmptyState";
 import { Button } from "@/components/ui/button";
-import { orders as seedOrders } from "@/lib/mock-data";
-import { useUserOrders } from "@/lib/orders-store";
+import { useAllOrders, useUserOrders } from "@/lib/orders-store";
 import { CheckCircle2, ChefHat, Clock, Utensils, UtensilsCrossed } from "lucide-react";
 
 export const Route = createFileRoute("/orders")({
@@ -28,8 +27,8 @@ const steps = [
 
 function OrdersPage() {
   const userOrders = useUserOrders();
-  const all = [...userOrders, ...seedOrders];
-  const active = userOrders[0] ?? seedOrders[0];
+  const all = useAllOrders();
+  const active = userOrders[0] ?? all[0];
   const currentIdx = steps.findIndex((s) => s.key === active?.status);
 
   return (

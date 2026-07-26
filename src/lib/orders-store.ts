@@ -1,7 +1,11 @@
 import { useSyncExternalStore } from "react";
-import type { Order } from "./mock-data";
+import { orders as seedOrders, type Order, type OrderStatus } from "./mock-data";
 
-let orders: Order[] = [];
+// Initialize with seed orders so kitchen has tickets to work on immediately.
+let orders: Order[] = [...seedOrders];
+// Track which orders were placed by the current user (so the Orders page can highlight them).
+const userOrderIds = new Set<string>();
+
 const listeners = new Set<() => void>();
 
 function emit() {
@@ -25,7 +29,9 @@ export function addOrderItem(input: {
 }) {
   const table = input.table ?? "You";
   // Merge with an existing pending "You" order to keep the list tidy.
-  const existingIdx = orders.findIndex((o) => o.table === table && o.status === "pending");
+  const existingIdx = orders.findIndex(
+    (o) => o.table === table && o.status === "pending" && userOrderIds.has(o.id),
+  );
   if (existingIdx >= 0) {
     const existing = orders[existingIdx];
     const items = [...existing.items];
@@ -43,8 +49,14 @@ export function addOrderItem(input: {
       placedAt: nowHM(),
       total: input.price,
     };
+    userOrderIds.add(created.id);
     orders = [created, ...orders];
   }
+  emit();
+}
+
+export function updateOrderStatus(id: string, status: OrderStatus) {
+  orders = orders.map((o) => (o.id === id ? { ...o, status } : o));
   emit();
 }
 
@@ -57,6 +69,15 @@ function getSnapshot() {
   return orders;
 }
 
-export function useUserOrders() {
+export function useAllOrders() {
   return useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+}
+
+export function useUserOrders() {
+  const all = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+  return all.filter((o) => userOrderIds.has(o.id));
+}
+
+export function isUserOrder(id: string) {
+  return userOrderIds.has(id);
 }

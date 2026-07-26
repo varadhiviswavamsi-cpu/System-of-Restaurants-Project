@@ -4,7 +4,8 @@ import { DashboardShell } from "@/components/layout/DashboardShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { orders as initialOrders, type Order, type OrderStatus } from "@/lib/mock-data";
+import { type Order, type OrderStatus } from "@/lib/mock-data";
+import { useAllOrders, updateOrderStatus } from "@/lib/orders-store";
 import { CheckCircle2, ChefHat, Check, Flame, Timer } from "lucide-react";
 import { toast } from "sonner";
 
@@ -36,13 +37,13 @@ const nextStatus: Record<"pending" | "preparing" | "ready", { status: OrderStatu
 };
 
 function KitchenDashboard() {
-  const [orders, setOrders] = useState<Order[]>(initialOrders);
+  const orders = useAllOrders();
   const [station, setStation] = useState<Station>("Pass");
   const [stationOpen, setStationOpen] = useState(false);
 
   const advance = (order: Order, from: "pending" | "preparing" | "ready") => {
     const next = nextStatus[from];
-    setOrders((prev) => prev.map((o) => (o.id === order.id ? { ...o, status: next.status } : o)));
+    updateOrderStatus(order.id, next.status);
     toast.success(`Order ${order.id} ${next.label}`, {
       description: `Table ${order.table}`,
     });

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { enterSudo } from "@/lib/sudo";
 
 export const Route = createFileRoute("/auth/signup")({
   head: () => ({
@@ -38,6 +39,7 @@ function Signup() {
             className="mt-6 space-y-4"
             onSubmit={(e) => {
               e.preventDefault();
+              enterSudo();
               navigate({ to: "/dashboard/manager" });
             }}
           >

@@ -4,6 +4,7 @@ import { Logo } from "@/components/brand/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { enterSudo } from "@/lib/sudo";
 
 export const Route = createFileRoute("/auth/login")({
   head: () => ({
@@ -51,6 +52,7 @@ function Login() {
             className="mt-6 space-y-4"
             onSubmit={(e) => {
               e.preventDefault();
+              enterSudo();
               navigate({ to: "/dashboard/manager" });
             }}
           >

@@ -12,6 +12,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useTheme } from "@/hooks/use-theme";
+import { enterSudo } from "@/lib/sudo";
 
 const links = [
   { to: "/menu", label: "Menu" },
@@ -78,7 +79,7 @@ function MenuTrigger() {
           </Link>
           <Link
             to="/dashboard/manager"
-            onClick={() => setOpen(false)}
+            onClick={() => { enterSudo(); setOpen(false); }}
             className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             Enter Sudo
@@ -117,7 +118,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
               <Link to="/auth/login">Sign in</Link>
             </Button>
             <Button size="sm" asChild className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
-              <Link to="/dashboard/manager">Enter Sudo</Link>
+              <Link to="/dashboard/manager" onClick={() => enterSudo()}>Enter Sudo</Link>
             </Button>
           </div>
         </div>

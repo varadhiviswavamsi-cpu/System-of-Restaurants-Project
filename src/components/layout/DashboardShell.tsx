@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard,
   ChefHat,
@@ -12,8 +12,9 @@ import {
   Home,
   Sun,
   Moon,
+  LogOut,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { NavHistory } from "@/components/common/NavHistory";
 import {
@@ -32,6 +33,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useTheme } from "@/hooks/use-theme";
+import { exitSudo, useSudo } from "@/lib/sudo";
 
 const nav = [
   {
@@ -132,6 +134,25 @@ export function DashboardShell({
   actions?: ReactNode;
   children: ReactNode;
 }) {
+  const navigate = useNavigate();
+  const sudo = useSudo();
+
+  useEffect(() => {
+    if (sudo === false) {
+      navigate({ to: "/" });
+    }
+  }, [sudo, navigate]);
+
+  if (sudo !== true) {
+    // Not authorised — render nothing while we redirect out of sudo-only area.
+    return null;
+  }
+
+  const handleExitSudo = () => {
+    exitSudo();
+    navigate({ to: "/" });
+  };
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
@@ -146,8 +167,24 @@ export function DashboardShell({
             </div>
             <div className="hidden items-center gap-2 sm:flex">{actions}</div>
             <ThemeToggle />
-            <Button variant="outline" size="sm" asChild className="hidden md:inline-flex">
-              <Link to="/auth/login">Sign in</Link>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExitSudo}
+              className="hidden md:inline-flex"
+              aria-label="Exit sudo mode and return to customer view"
+            >
+              <LogOut className="mr-1.5 h-4 w-4" />
+              Customer's view
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handleExitSudo}
+              className="md:hidden h-9 w-9 shrink-0 rounded-full"
+              aria-label="Exit sudo mode"
+            >
+              <LogOut className="h-4 w-4" />
             </Button>
             <Avatar className="h-9 w-9 ring-2 ring-primary/20">
               <AvatarFallback className="bg-brand-gradient text-primary-foreground">RO</AvatarFallback>
@@ -161,3 +198,4 @@ export function DashboardShell({
     </SidebarProvider>
   );
 }
+

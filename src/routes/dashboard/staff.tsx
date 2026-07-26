@@ -4,10 +4,12 @@ import { DashboardShell } from "@/components/layout/DashboardShell";
 import { SummaryCard } from "@/components/common/SummaryCard";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
-import { tables } from "@/lib/mock-data";
+import { useReservations, useTables } from "@/lib/reservations-store";
 import { useAllOrders } from "@/lib/orders-store";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Bell, ClipboardList, Users, Utensils } from "lucide-react";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/dashboard/staff")({
   head: () => ({

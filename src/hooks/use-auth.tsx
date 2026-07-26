@@ -25,7 +25,7 @@ type AuthState = {
 const AuthContext = createContext<AuthState | undefined>(undefined);
 
 export const DEFAULT_ROUTE_FOR_ROLE: Record<AppRole, string> = {
-  customer: "/",
+  customer: "/menu",
   staff: "/dashboard/staff",
   kitchen: "/dashboard/kitchen",
   manager: "/dashboard/manager",

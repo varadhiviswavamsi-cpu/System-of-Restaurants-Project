@@ -58,6 +58,9 @@ function Onboarding() {
     }
     toast.success("You're all set!");
     await refresh();
+    if (selected === "customer") {
+      window.sessionStorage.setItem("sor-customer-greeting", "true");
+    }
     navigate({ to: DEFAULT_ROUTE_FOR_ROLE[selected] });
   };
 

@@ -31,18 +31,8 @@ export const Route = createFileRoute("/queue")({
   component: QueuePage,
 });
 
-type QueueParty = {
-  id: string;
-  name: string;
-  size: number;
-  wait: number;
-  position: number;
-  userAdded?: boolean;
-};
-
 function QueuePage() {
-  const [list, setList] = useState<QueueParty[]>(seedQueue as QueueParty[]);
-  const [hasMine, setHasMine] = useState(false);
+  const list = useQueue();
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   const totalWait = list.at(-1)?.wait ?? 0;
@@ -55,20 +45,7 @@ function QueuePage() {
     const sizeRaw = (form.elements.namedItem("size") as HTMLInputElement)?.value || "2";
     const size = Number(sizeRaw) || 2;
 
-    setList((prev) => {
-      const nextPosition = prev.length + 1;
-      const lastWait = prev.at(-1)?.wait ?? 0;
-      const newParty: QueueParty = {
-        id: `q-${Date.now()}`,
-        name,
-        size,
-        wait: lastWait + 10,
-        position: nextPosition,
-        userAdded: true,
-      };
-      return [...prev, newParty];
-    });
-    setHasMine(true);
+    joinQueue({ name, size });
     toast.success("You're on the list!", {
       description: `Thanks ${name} — party of ${size}. We'll text ${phone || "you"} when your table is ready.`,
     });
@@ -76,7 +53,7 @@ function QueuePage() {
   };
 
   const handleCancelClick = () => {
-    if (!hasMine) {
+    if (!hasUserInQueue()) {
       toast.error("You didn't join the waitlist", {
         description: "There's no active queue entry to cancel. Please join the queue first.",
       });
@@ -86,15 +63,12 @@ function QueuePage() {
   };
 
   const confirmCancellation = () => {
-    setList((prev) => {
-      const filtered = prev.filter((p) => !p.userAdded);
-      return filtered.map((p, i) => ({ ...p, position: i + 1 }));
-    });
-    setHasMine(false);
+    leaveQueue();
     toast.success("Queue cancelled", {
       description: "You've been removed from the waitlist. We hope to see you soon.",
     });
   };
+
 
   return (
     <PublicShell>

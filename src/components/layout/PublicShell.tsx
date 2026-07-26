@@ -118,7 +118,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
               <Link to="/auth/login">Sign in</Link>
             </Button>
             <Button size="sm" asChild className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
-              <Link to="/dashboard/manager">Enter Sudo</Link>
+              <Link to="/dashboard/manager" onClick={() => enterSudo()}>Enter Sudo</Link>
             </Button>
           </div>
         </div>

@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { SummaryCard } from "@/components/common/SummaryCard";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
-import { orders, tables } from "@/lib/mock-data";
+import { tables } from "@/lib/mock-data";
+import { useAllOrders } from "@/lib/orders-store";
 import { Bell, ClipboardList, Users, Utensils } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -27,13 +29,22 @@ const statusRing: Record<string, string> = {
 };
 
 function StaffDashboard() {
-  const openOrders = orders.filter((o) => o.status !== "served" && o.status !== "cancelled");
+  const allOrders = useAllOrders();
+  const openOrders = allOrders.filter((o) => o.status !== "served" && o.status !== "cancelled");
   return (
     <DashboardShell
       title="Staff floor"
       subtitle="Sections A · B · Patio"
       actions={
-        <Button size="sm" className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
+        <Button
+          size="sm"
+          onClick={() =>
+            toast.success("Runner called", {
+              description: "A runner is on the way to your section.",
+            })
+          }
+          className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95"
+        >
           <Bell className="mr-1 h-4 w-4" /> Call runner
         </Button>
       }

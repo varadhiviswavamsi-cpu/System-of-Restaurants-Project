@@ -1,8 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
-import { orders } from "@/lib/mock-data";
-import { CheckCircle2, ChefHat, Clock, Utensils } from "lucide-react";
+import { EmptyState } from "@/components/common/EmptyState";
+import { Button } from "@/components/ui/button";
+import { orders as seedOrders } from "@/lib/mock-data";
+import { useUserOrders } from "@/lib/orders-store";
+import { CheckCircle2, ChefHat, Clock, Utensils, UtensilsCrossed } from "lucide-react";
 
 export const Route = createFileRoute("/orders")({
   head: () => ({
@@ -24,66 +27,100 @@ const steps = [
 ];
 
 function OrdersPage() {
-  const active = orders[0];
-  const currentIdx = steps.findIndex((s) => s.key === active.status);
+  const userOrders = useUserOrders();
+  const all = [...userOrders, ...seedOrders];
+  const active = userOrders[0] ?? seedOrders[0];
+  const currentIdx = steps.findIndex((s) => s.key === active?.status);
+
   return (
     <PublicShell>
-      <section className="mx-auto w-full max-w-4xl px-4 py-10">
-        <div className="card-elevated p-6 md:p-8">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">Order</div>
-              <h1 className="font-display text-3xl font-bold">{active.id}</h1>
-              <div className="text-sm text-muted-foreground">Table {active.table} · Placed {active.placedAt}</div>
-            </div>
-            <StatusBadge status={active.status} />
+      <section className="mx-auto w-full max-w-4xl px-4 py-8 md:py-10">
+        {userOrders.length === 0 && (
+          <div className="card-elevated mb-6 p-5">
+            <EmptyState
+              icon={UtensilsCrossed}
+              title="No orders yet"
+              description="Add dishes from the menu — they'll appear here in real time."
+              action={
+                <Button asChild className="bg-brand-gradient text-primary-foreground shadow-warm">
+                  <Link to="/menu">Browse menu</Link>
+                </Button>
+              }
+            />
           </div>
+        )}
 
-          <div className="mt-8 grid grid-cols-4 gap-2">
-            {steps.map((s, i) => {
-              const done = i <= currentIdx;
-              return (
-                <div key={s.key} className="flex flex-col items-center gap-2 text-center">
-                  <div
-                    className={`grid h-11 w-11 place-items-center rounded-full ring-2 transition-colors ${
-                      done
-                        ? "bg-brand-gradient text-primary-foreground ring-primary/40"
-                        : "bg-muted text-muted-foreground ring-border"
-                    }`}
-                  >
-                    <s.icon className="h-5 w-5" />
-                  </div>
-                  <div className="text-xs font-medium">{s.label}</div>
+        {active && (
+          <div className="card-elevated p-5 md:p-8">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:flex sm:flex-wrap sm:justify-between">
+              <div className="min-w-0">
+                <div className="text-xs uppercase tracking-widest text-muted-foreground">Order</div>
+                <h1 className="truncate font-display text-2xl font-bold sm:text-3xl">{active.id}</h1>
+                <div className="truncate text-sm text-muted-foreground">
+                  Table {active.table} · Placed {active.placedAt}
                 </div>
-              );
-            })}
-          </div>
+              </div>
+              <StatusBadge status={active.status} />
+            </div>
 
-          <div className="mt-8 rounded-xl border bg-background/60 p-5">
-            <div className="mb-3 font-display text-lg font-semibold">Items</div>
-            <ul className="divide-y">
-              {active.items.map((it) => (
-                <li key={it.name} className="flex items-center justify-between py-3">
-                  <span>{it.name}</span>
-                  <span className="text-sm text-muted-foreground">× {it.qty}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 flex items-center justify-between border-t pt-4">
-              <span className="text-sm text-muted-foreground">Total</span>
-              <span className="font-display text-xl font-bold">${active.total}</span>
+            <div className="mt-6 grid grid-cols-4 gap-2 md:mt-8">
+              {steps.map((s, i) => {
+                const done = i <= currentIdx;
+                return (
+                  <div key={s.key} className="flex flex-col items-center gap-2 text-center">
+                    <div
+                      className={`grid h-10 w-10 place-items-center rounded-full ring-2 transition-colors sm:h-11 sm:w-11 ${
+                        done
+                          ? "bg-brand-gradient text-primary-foreground ring-primary/40"
+                          : "bg-muted text-muted-foreground ring-border"
+                      }`}
+                    >
+                      <s.icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </div>
+                    <div className="text-[11px] font-medium sm:text-xs">{s.label}</div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-6 rounded-xl border bg-background/60 p-4 md:mt-8 md:p-5">
+              <div className="mb-3 font-display text-lg font-semibold">Items</div>
+              <ul className="divide-y">
+                {active.items.map((it) => (
+                  <li key={it.name} className="flex items-center justify-between gap-3 py-3">
+                    <span className="min-w-0 truncate">{it.name}</span>
+                    <span className="shrink-0 text-sm text-muted-foreground">× {it.qty}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4 flex items-center justify-between border-t pt-4">
+                <span className="text-sm text-muted-foreground">Total</span>
+                <span className="font-display text-xl font-bold">${active.total}</span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
-        <div className="mt-10">
-          <h2 className="font-display text-xl font-semibold">Recent orders</h2>
+        <div className="mt-8 md:mt-10">
+          <h2 className="font-display text-lg font-semibold sm:text-xl">
+            {userOrders.length > 0 ? "Your orders & recent tickets" : "Recent orders"}
+          </h2>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            {orders.slice(1).map((o) => (
-              <div key={o.id} className="card-elevated flex items-center justify-between p-4">
-                <div>
-                  <div className="font-semibold">{o.id}</div>
-                  <div className="text-xs text-muted-foreground">Table {o.table} · {o.placedAt}</div>
+            {all.slice(active ? 1 : 0).map((o) => (
+              <div
+                key={o.id}
+                className="card-elevated grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 p-4"
+              >
+                <div className="min-w-0">
+                  <div className="truncate font-semibold">{o.id}</div>
+                  <div className="truncate text-xs text-muted-foreground">
+                    Table {o.table} · {o.placedAt}
+                  </div>
+                  {o.items.length > 0 && (
+                    <div className="mt-1 truncate text-xs text-muted-foreground">
+                      {o.items.map((it) => `${it.name} ×${it.qty}`).join(", ")}
+                    </div>
+                  )}
                 </div>
                 <StatusBadge status={o.status} />
               </div>

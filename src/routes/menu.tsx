@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Check } from "lucide-react";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { menuItems } from "@/lib/mock-data";
+import { addOrderItem } from "@/lib/orders-store";
 import { Button } from "@/components/ui/button";
 import { SearchInput } from "@/components/ui/search-input";
 import { StatusBadge } from "@/components/common/StatusBadge";
@@ -42,9 +43,10 @@ function MenuPage() {
       (q === "" || m.name.toLowerCase().includes(q.toLowerCase())),
   );
 
-  const handleOrder = (id: string, name: string, category: string) => {
+  const handleOrder = (id: string, name: string, category: string, price: number) => {
     if (ordered[id]) return;
     setOrdered((prev) => ({ ...prev, [id]: true }));
+    addOrderItem({ name, price });
     const mins = estimateMinutes(category);
     toast.success(
       `You have ordered ${name} and will be on your table in the estimated time of ${mins} minutes.`,
@@ -112,7 +114,7 @@ function MenuPage() {
                     <Button
                       size="sm"
                       disabled={!m.available || isOrdered}
-                      onClick={() => handleOrder(m.id, m.name, m.category)}
+                      onClick={() => handleOrder(m.id, m.name, m.category, m.price)}
                       className={
                         isOrdered
                           ? "bg-green-600 text-white shadow-warm hover:bg-green-600 disabled:opacity-100"

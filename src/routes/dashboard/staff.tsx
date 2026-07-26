@@ -1,14 +1,73 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { SummaryCard } from "@/components/common/SummaryCard";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
-import { useReservations, useTables } from "@/lib/reservations-store";
+import { useReservations, useTables, setTableStatus } from "@/lib/reservations-store";
 import { useAllOrders } from "@/lib/orders-store";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Bell, ClipboardList, Users, Utensils } from "lucide-react";
+import type { TableStatus } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
+
+function TableStatusControl({
+  id,
+  current,
+  guestLabel,
+}: {
+  id: string;
+  current: TableStatus;
+  guestLabel?: string;
+}) {
+  const [choice, setChoice] = useState<TableStatus | null>(null);
+
+  const apply = () => {
+    if (!choice) {
+      toast.error("Pick a status first", { description: "Choose Occupied or Cleaning." });
+      return;
+    }
+    if (choice === current) {
+      toast(`Table ${id} is already ${choice}`);
+      return;
+    }
+    setTableStatus(id, choice);
+    toast.success(`Table ${id} marked ${choice}`, {
+      description: guestLabel ? `Reservation for ${guestLabel} kept.` : undefined,
+    });
+    setChoice(null);
+  };
+
+  return (
+    <div className="mt-3 border-t border-white/30 pt-3">
+      <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        Set status
+      </div>
+      <div className="mt-2 flex items-center gap-2">
+        {(["occupied", "cleaning"] as TableStatus[]).map((s) => (
+          <button
+            key={s}
+            type="button"
+            onClick={() => setChoice(s)}
+            className={cn(
+              "btn-jelly flex-1 rounded-full px-3 py-1.5 text-xs font-medium capitalize ring-1 transition",
+              choice === s
+                ? "bg-primary/20 text-primary ring-primary/50"
+                : "bg-background/40 text-muted-foreground ring-white/30",
+            )}
+          >
+            {s}
+          </button>
+        ))}
+        <Button size="sm" className="rounded-full px-4 text-xs" onClick={apply}>
+          Enter
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 
 
 export const Route = createFileRoute("/dashboard/staff")({
@@ -158,6 +217,8 @@ function StaffDashboard() {
                         <p className="mt-1.5 text-sm text-muted-foreground">No order placed yet.</p>
                       )}
                     </div>
+
+                    <TableStatusControl id={t.id} current={t.status} guestLabel={res?.name ?? t.guests} />
                   </HoverCardContent>
                 </HoverCard>
               );

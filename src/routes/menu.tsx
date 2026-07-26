@@ -43,9 +43,10 @@ function MenuPage() {
       (q === "" || m.name.toLowerCase().includes(q.toLowerCase())),
   );
 
-  const handleOrder = (id: string, name: string, category: string) => {
+  const handleOrder = (id: string, name: string, category: string, price: number) => {
     if (ordered[id]) return;
     setOrdered((prev) => ({ ...prev, [id]: true }));
+    addOrderItem({ name, price });
     const mins = estimateMinutes(category);
     toast.success(
       `You have ordered ${name} and will be on your table in the estimated time of ${mins} minutes.`,

@@ -104,8 +104,8 @@ function AppSidebar({ role }: { role: AppRole }) {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild isActive={currentPath === "/"}>
-                  <Link to="/">
+                <SidebarMenuButton asChild isActive={currentPath === "/menu"}>
+                  <Link to="/menu">
                     <Home />
                     <span>Home</span>
                   </Link>
@@ -213,7 +213,7 @@ export function DashboardShell({
             <Button
               variant="outline"
               size="sm"
-              onClick={() => navigate({ to: "/" })}
+              onClick={() => navigate({ to: "/menu" })}
               className="hidden md:inline-flex"
               aria-label="Return to customer view"
             >

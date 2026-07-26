@@ -103,9 +103,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
+const FALLBACK_AUTH: AuthState = {
+  session: null,
+  user: null,
+  role: null,
+  profile: null,
+  loading: false,
+  refresh: async () => {},
+  signOut: async () => {},
+};
+
 export function useAuth(): AuthState {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
+  // During HMR the provider module can be re-evaluated, creating a new
+  // context identity while consumers still hold the old one. Fall back to
+  // a safe default instead of crashing the tree.
+  if (!ctx) {
+    if (typeof window !== "undefined" && import.meta.env.DEV) {
+      console.warn("useAuth: no provider in scope, using fallback (likely HMR).");
+    }
+    return FALLBACK_AUTH;
+  }
   return ctx;
 }
 

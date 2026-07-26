@@ -18,8 +18,16 @@ export const Route = createFileRoute("/auth/login")({
 });
 
 function Login() {
+  const navigate = useNavigate();
   return (
-    <div className="grid min-h-screen lg:grid-cols-2">
+    <div className="relative grid min-h-screen lg:grid-cols-2">
+      <Link
+        to="/"
+        aria-label="Back to home"
+        className="absolute left-4 top-4 z-20 inline-flex h-10 items-center gap-2 rounded-full border border-white/50 bg-gradient-to-b from-white/40 to-white/5 px-3 text-sm font-medium text-foreground shadow-[inset_0_1px_0_0_rgba(255,255,255,0.65),0_8px_28px_-14px_rgba(0,0,0,0.35)] backdrop-blur-2xl transition-all hover:shadow-[0_0_0_1px_rgba(255,255,255,0.75),0_0_22px_-2px_rgba(255,255,255,0.75)] active:scale-95 dark:border-white/20 dark:from-white/15 dark:to-white/5"
+      >
+        <ArrowLeft className="h-4 w-4" /> Back
+      </Link>
       <div className="hidden bg-brand-gradient p-12 text-primary-foreground lg:flex lg:flex-col lg:justify-between">
         <Logo />
         <div>
@@ -43,7 +51,7 @@ function Login() {
             className="mt-6 space-y-4"
             onSubmit={(e) => {
               e.preventDefault();
-              window.location.assign("/dashboard/manager");
+              navigate({ to: "/dashboard/manager" });
             }}
           >
             <div className="space-y-1.5">

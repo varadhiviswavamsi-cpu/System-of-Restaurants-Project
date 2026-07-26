@@ -4,7 +4,13 @@ import { PublicShell } from "@/components/layout/PublicShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { reservations as seedReservations } from "@/lib/mock-data";
+import {
+  addReservation,
+  cancelUserReservation,
+  useReservations,
+  type Reservation,
+} from "@/lib/reservations-store";
+
 import { CalendarClock } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -31,18 +37,8 @@ export const Route = createFileRoute("/reservations")({
   component: ReservationsPage,
 });
 
-type Reservation = {
-  id: string;
-  name: string;
-  time: string;
-  party: number;
-  table: string;
-  note: string;
-  userAdded?: boolean;
-};
-
 function ReservationsPage() {
-  const [list, setList] = useState<Reservation[]>(seedReservations as Reservation[]);
+  const list = useReservations();
   const [hasMine, setHasMine] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
 
@@ -55,19 +51,15 @@ function ReservationsPage() {
     const partyRaw = (form.elements.namedItem("party") as HTMLInputElement)?.value || "2";
     const note = (form.elements.namedItem("note") as HTMLInputElement)?.value || "";
 
-    const newRes: Reservation = {
-      id: `r-${Date.now()}`,
+    const created = addReservation({
       name,
-      time: time || "—",
+      time,
       party: Number(partyRaw) || 2,
-      table: "—",
       note,
-      userAdded: true,
-    };
-    setList((prev) => [newRes, ...prev]);
+    });
     setHasMine(true);
     toast.success("Reservation requested...", {
-      description: `Thanks ${name} — we'll confirm your table for ${date}${time ? ` at ${time}` : ""} shortly.`,
+      description: `Thanks ${name} — table ${created.table} is held for ${date}${time ? ` at ${time}` : ""}.`,
     });
     form.reset();
   };
@@ -83,18 +75,13 @@ function ReservationsPage() {
   };
 
   const confirmCancellation = () => {
-    setList((prev) => {
-      const idx = prev.findIndex((r) => r.userAdded);
-      if (idx === -1) return prev;
-      const next = [...prev];
-      next.splice(idx, 1);
-      return next;
-    });
+    cancelUserReservation();
     setHasMine(false);
     toast.success("Reservation cancelled", {
       description: "Your reservation has been cancelled. We hope to see you soon.",
     });
   };
+
 
   return (
     <PublicShell>

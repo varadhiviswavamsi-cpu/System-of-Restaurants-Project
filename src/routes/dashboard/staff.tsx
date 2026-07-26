@@ -4,10 +4,12 @@ import { DashboardShell } from "@/components/layout/DashboardShell";
 import { SummaryCard } from "@/components/common/SummaryCard";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
-import { tables } from "@/lib/mock-data";
+import { useReservations, useTables } from "@/lib/reservations-store";
 import { useAllOrders } from "@/lib/orders-store";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Bell, ClipboardList, Users, Utensils } from "lucide-react";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/dashboard/staff")({
   head: () => ({
@@ -30,7 +32,10 @@ const statusRing: Record<string, string> = {
 
 function StaffDashboard() {
   const allOrders = useAllOrders();
+  const tables = useTables();
+  const reservations = useReservations();
   const openOrders = allOrders.filter((o) => o.status !== "served" && o.status !== "cancelled");
+
   return (
     <DashboardShell
       title="Staff floor"
@@ -75,31 +80,90 @@ function StaffDashboard() {
             </div>
           </div>
           <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-            {tables.map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                onClick={() =>
-                  toast(`Table ${t.id}`, {
-                    description: `${t.seats} seats · ${t.status}${t.guests ? ` · ${t.guests}` : ""}`,
-                  })
-                }
-                className={cn(
-                  "rounded-2xl p-4 text-left ring-2 transition-transform hover:-translate-y-0.5 hover:shadow-warm",
-                  statusRing[t.status],
-                )}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="font-display text-xl font-bold">{t.id}</div>
-                  <div className="text-xs text-muted-foreground">{t.seats} seats</div>
-                </div>
-                <div className="mt-3">
-                  <StatusBadge status={t.status} />
-                </div>
-                {t.guests && <div className="mt-2 text-xs text-muted-foreground">{t.guests}</div>}
-              </button>
-            ))}
+            {tables.map((t) => {
+              const res = reservations.find((r) => r.table === t.id);
+              const tableOrders = allOrders.filter(
+                (o) => o.table === t.id || (res?.userAdded && o.table === "You"),
+              );
+              return (
+                <HoverCard key={t.id} openDelay={80} closeDelay={80}>
+                  <HoverCardTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        toast(`Table ${t.id}`, {
+                          description: `${t.seats} seats · ${t.status}${t.guests ? ` · ${t.guests}` : ""}`,
+                        })
+                      }
+                      className={cn(
+                        "rounded-2xl p-4 text-left ring-2 transition-transform hover:-translate-y-0.5 hover:shadow-warm",
+                        statusRing[t.status],
+                      )}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="font-display text-xl font-bold">{t.id}</div>
+                        <div className="text-xs text-muted-foreground">{t.seats} seats</div>
+                      </div>
+                      <div className="mt-3">
+                        <StatusBadge status={t.status} />
+                      </div>
+                      {t.guests && <div className="mt-2 text-xs text-muted-foreground">{t.guests}</div>}
+                    </button>
+                  </HoverCardTrigger>
+                  <HoverCardContent
+                    align="center"
+                    className="w-72 border-white/40 bg-card/35 backdrop-blur-2xl ring-1 ring-white/30 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.35)]"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="font-display text-base font-semibold">Table {t.id}</div>
+                      <StatusBadge status={t.status} />
+                    </div>
+                    {res ? (
+                      <div className="mt-3 space-y-1 text-sm">
+                        <div className="font-semibold">
+                          {res.name}
+                          {res.userAdded && (
+                            <span className="ml-2 rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-primary">
+                              You
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Party of {res.party} · {res.time}
+                          {res.note ? ` · ${res.note}` : ""}
+                        </div>
+                      </div>
+                    ) : (
+                      <p className="mt-3 text-sm text-muted-foreground">
+                        {t.guests ? t.guests : "No reservation on this table."}
+                      </p>
+                    )}
+
+                    <div className="mt-3 border-t border-white/30 pt-3">
+                      <div className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                        Order
+                      </div>
+                      {tableOrders.length ? (
+                        <ul className="mt-1.5 space-y-1 text-sm">
+                          {tableOrders.map((o) => (
+                            <li key={o.id} className="flex items-start justify-between gap-2">
+                              <span className="text-muted-foreground">
+                                {o.items.map((i) => `${i.name} ×${i.qty}`).join(", ")}
+                              </span>
+                              <span className="font-semibold text-primary">${o.total}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="mt-1.5 text-sm text-muted-foreground">No order placed yet.</p>
+                      )}
+                    </div>
+                  </HoverCardContent>
+                </HoverCard>
+              );
+            })}
           </div>
+
         </div>
 
         <div className="card-elevated p-5">

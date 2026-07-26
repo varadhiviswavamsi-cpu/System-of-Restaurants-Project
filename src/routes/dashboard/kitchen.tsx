@@ -3,9 +3,13 @@ import { useState } from "react";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { orders as initialOrders, type Order, type OrderStatus } from "@/lib/mock-data";
-import { CheckCircle2, ChefHat, Flame, Timer } from "lucide-react";
+import { CheckCircle2, ChefHat, Check, Flame, Timer } from "lucide-react";
 import { toast } from "sonner";
+
+const STATIONS = ["Pass", "Grill", "Sauté", "Cold", "Pastry", "Expo"] as const;
+type Station = (typeof STATIONS)[number];
 
 export const Route = createFileRoute("/dashboard/kitchen")({
   head: () => ({

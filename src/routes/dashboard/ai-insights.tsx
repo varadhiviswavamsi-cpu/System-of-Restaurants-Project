@@ -53,31 +53,51 @@ function AiInsightsPage() {
   const orders = useAllOrders();
   const reservations = useReservations();
   const queue = useQueue();
-  const [nonce, setNonce] = useState(0);
+  const [stamp, setStamp] = useState(() => new Date());
+  const [refreshing, setRefreshing] = useState(false);
 
   const briefing = useMemo(() => {
-    const ctxValue = buildAiContext({ orders, reservations, queue });
+    const ctxValue = buildAiContext({ orders, reservations, queue, now: stamp });
     return { ctx: ctxValue, data: generateBriefing(ctxValue) };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orders, reservations, queue, nonce]);
+  }, [orders, reservations, queue, stamp]);
+
+  const handleRefresh = () => {
+    if (refreshing) return;
+    setRefreshing(true);
+    window.setTimeout(() => {
+      setStamp(new Date());
+      setRefreshing(false);
+      toast.success("Analysis refreshed", {
+        description: "Forecasts, inventory risk and station load recomputed from live data.",
+      });
+    }, 500);
+  };
 
   const { ctx, data } = briefing;
+  const updatedAt = stamp.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
   const maxCovers = Math.max(...data.demand.hourly.map((h) => h.covers));
   const criticalStock = data.inventory.filter((i) => i.risk !== "info");
 
   return (
     <DashboardShell
       title="AI Insights"
-      subtitle={`Updated ${data.generatedAt} · ${data.headline}`}
+      subtitle={`Updated ${updatedAt} · ${data.headline}`}
       actions={
         <Button
           size="sm"
           variant="outline"
-          onClick={() => setNonce((n) => n + 1)}
+          onClick={handleRefresh}
+          disabled={refreshing}
           className="gap-2"
         >
-          <RefreshCw className="h-4 w-4" /> Refresh analysis
+          <RefreshCw className={refreshing ? "h-4 w-4 animate-spin" : "h-4 w-4"} />
+          {refreshing ? "Refreshing…" : "Refresh analysis"}
         </Button>
+
       }
     >
       {data.demand.spikeAlert && (

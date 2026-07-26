@@ -13,8 +13,12 @@ function emit() {
 }
 
 function nextId() {
-  const n = 1050 + orders.filter((o) => o.id.startsWith("#1")).length;
-  return `#${n}`;
+  // Pick a number strictly greater than any existing "#NNNN" id so we never collide with seeds.
+  const maxN = orders.reduce((max, o) => {
+    const n = Number(o.id.replace(/^#/, ""));
+    return Number.isFinite(n) && n > max ? n : max;
+  }, 1050);
+  return `#${maxN + 1}`;
 }
 
 function nowHM() {

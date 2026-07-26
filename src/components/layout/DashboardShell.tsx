@@ -53,6 +53,7 @@ const nav: NavGroup[] = [
     label: "Management",
     items: [
       { title: "Manager", url: "/dashboard/manager", icon: LayoutDashboard, roles: ["manager"] },
+      { title: "AI Insights", url: "/dashboard/ai-insights", icon: Sparkles, roles: ["manager"] },
       { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3, roles: ["manager"] },
       { title: "Inventory", url: "/dashboard/inventory", icon: Package, roles: ["manager"] },
     ],

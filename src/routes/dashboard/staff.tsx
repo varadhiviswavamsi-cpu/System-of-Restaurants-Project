@@ -78,8 +78,14 @@ function StaffDashboard() {
             {tables.map((t) => (
               <button
                 key={t.id}
+                type="button"
+                onClick={() =>
+                  toast(`Table ${t.id}`, {
+                    description: `${t.seats} seats · ${t.status}${t.guests ? ` · ${t.guests}` : ""}`,
+                  })
+                }
                 className={cn(
-                  "rounded-2xl p-4 text-left ring-2 transition-transform hover:-translate-y-0.5",
+                  "rounded-2xl p-4 text-left ring-2 transition-transform hover:-translate-y-0.5 hover:shadow-warm",
                   statusRing[t.status],
                 )}
               >

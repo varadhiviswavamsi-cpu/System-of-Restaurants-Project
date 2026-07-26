@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { DashboardShell } from "@/components/layout/DashboardShell";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,13 @@ import { type Order, type OrderStatus } from "@/lib/mock-data";
 import { useAllOrders, updateOrderStatus } from "@/lib/orders-store";
 import { CheckCircle2, ChefHat, Check, Flame, Timer } from "lucide-react";
 import { toast } from "sonner";
+
+// Stable per-ticket prep minutes so the badge doesn't jump on re-render.
+function stableMinutes(id: string) {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+  return (h % 8) + 3;
+}
 
 const STATIONS = ["Pass", "Grill", "Sauté", "Cold", "Pastry", "Expo"] as const;
 type Station = (typeof STATIONS)[number];

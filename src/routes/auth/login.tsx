@@ -53,11 +53,20 @@ async function routeAfterLogin(navigate: ReturnType<typeof useNavigate>) {
 
 function Login() {
   const navigate = useNavigate();
+  const { user, role, profile, loading: authLoading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
+
+  // Already signed in → don't show the form again.
+  useEffect(() => {
+    if (authLoading || !user) return;
+    if (!role || !profile?.onboarded) navigate({ to: "/onboarding", replace: true });
+    else navigate({ to: DEFAULT_ROUTE_FOR_ROLE[role], replace: true });
+  }, [authLoading, user, role, profile?.onboarded, navigate]);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

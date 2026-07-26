@@ -158,6 +158,8 @@ function StaffDashboard() {
                         <p className="mt-1.5 text-sm text-muted-foreground">No order placed yet.</p>
                       )}
                     </div>
+
+                    <TableStatusControl id={t.id} current={t.status} guestLabel={res?.name ?? t.guests} />
                   </HoverCardContent>
                 </HoverCard>
               );

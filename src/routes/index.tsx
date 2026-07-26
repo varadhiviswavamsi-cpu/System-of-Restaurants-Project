@@ -11,6 +11,7 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import { PublicShell } from "@/components/layout/PublicShell";
+import { enterSudo } from "@/lib/sudo";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

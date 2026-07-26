@@ -150,9 +150,11 @@ function AccountArea() {
             <span className="text-xs font-normal text-muted-foreground capitalize">{role ?? "no role"}</span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate({ to: "/onboarding" })}>
-            <UserIcon className="mr-2 h-4 w-4" />
-            Change role
+          <DropdownMenuItem asChild>
+            <Link to="/onboarding" className="flex w-full cursor-pointer items-center">
+              <UserIcon className="mr-2 h-4 w-4" />
+              Change role
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={async () => {

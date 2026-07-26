@@ -62,11 +62,20 @@ function OrdersPage() {
               <StatusBadge status={active.status} />
             </div>
 
-            <div className="mt-6 grid grid-cols-4 gap-2 md:mt-8">
+            <div className="relative mt-6 grid grid-cols-4 gap-2 md:mt-8">
+              {/* progress track: spans from center of first step to center of last */}
+              <div className="pointer-events-none absolute left-[12.5%] right-[12.5%] top-5 h-1 -translate-y-1/2 rounded-full bg-muted sm:top-[1.375rem]">
+                <div
+                  className="h-full rounded-full bg-brand-gradient shadow-warm transition-[width] duration-500 ease-out"
+                  style={{
+                    width: `${(Math.max(0, Math.min(currentIdx, steps.length - 1)) / (steps.length - 1)) * 100}%`,
+                  }}
+                />
+              </div>
               {steps.map((s, i) => {
                 const done = i <= currentIdx;
                 return (
-                  <div key={s.key} className="flex flex-col items-center gap-2 text-center">
+                  <div key={s.key} className="relative flex flex-col items-center gap-2 text-center">
                     <div
                       className={`grid h-10 w-10 place-items-center rounded-full ring-2 transition-colors sm:h-11 sm:w-11 ${
                         done
@@ -81,6 +90,7 @@ function OrdersPage() {
                 );
               })}
             </div>
+
 
             <div className="mt-6 rounded-xl border bg-background/60 p-4 md:mt-8 md:p-5">
               <div className="mb-3 font-display text-lg font-semibold">Items</div>

@@ -4,7 +4,7 @@ import { PublicShell } from "@/components/layout/PublicShell";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { queueParties as seedQueue } from "@/lib/mock-data";
+import { useQueue, joinQueue, leaveQueue, hasUserInQueue } from "@/lib/queue-store";
 import { Clock, Users } from "lucide-react";
 import { toast } from "sonner";
 import {

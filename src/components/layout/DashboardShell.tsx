@@ -160,6 +160,7 @@ export function DashboardShell({
   const navigate = useNavigate();
   const { user, role, profile, loading, signOut } = useAuth();
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
+  const isDashboardRoute = currentPath.startsWith("/dashboard");
 
   // Gate: must be signed in
   useEffect(() => {
@@ -172,12 +173,12 @@ export function DashboardShell({
       navigate({ to: "/onboarding" });
       return;
     }
-    if (!canAccessDashboardPath(role, currentPath)) {
+    if (isDashboardRoute && !canAccessDashboardPath(role, currentPath)) {
       navigate({ to: DEFAULT_ROUTE_FOR_ROLE[role] });
     }
-  }, [loading, user, role, currentPath, navigate]);
+  }, [loading, user, role, currentPath, isDashboardRoute, navigate]);
 
-  if (loading || !user || !role || !canAccessDashboardPath(role, currentPath)) {
+  if (loading || !user || !role || (isDashboardRoute && !canAccessDashboardPath(role, currentPath))) {
     return (
       <div className="flex min-h-screen items-center justify-center gap-3 text-muted-foreground">
         <Loader2 className="h-5 w-5 animate-spin" /> Loading…

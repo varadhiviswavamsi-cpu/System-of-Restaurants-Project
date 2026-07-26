@@ -43,6 +43,12 @@ function setTable(id: string, status: TableStatus, guests?: string) {
   tables = tables.map((t) => (t.id === id ? { ...t, status, guests } : t));
 }
 
+/** Change a table's status from the floor map, keeping any guest/reservation label. */
+export function setTableStatus(id: string, status: TableStatus) {
+  tables = tables.map((t) => (t.id === id ? { ...t, status } : t));
+  emit();
+}
+
 export function addReservation(input: {
   name: string;
   time: string;

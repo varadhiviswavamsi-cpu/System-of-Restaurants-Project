@@ -1,16 +1,19 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import {
   ArrowRight,
   CalendarClock,
   ChefHat,
   ClipboardList,
   LineChart,
+  Loader2,
   Package,
   Sparkles,
   Users,
   UtensilsCrossed,
 } from "lucide-react";
 import { PublicShell } from "@/components/layout/PublicShell";
+import { DEFAULT_ROUTE_FOR_ROLE, useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

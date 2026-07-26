@@ -5,6 +5,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { reservations } from "@/lib/mock-data";
 import { CalendarClock } from "lucide-react";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/reservations")({
   head: () => ({
@@ -29,37 +41,84 @@ function ReservationsPage() {
             className="mt-6 grid gap-4 sm:grid-cols-2"
             onSubmit={(e) => {
               e.preventDefault();
-              alert("Reservation requested — you'll get a confirmation shortly.");
+              const form = e.currentTarget as HTMLFormElement;
+              const name = (form.elements.namedItem("name") as HTMLInputElement)?.value || "Guest";
+              const time = (form.elements.namedItem("time") as HTMLInputElement)?.value || "";
+              const date = (form.elements.namedItem("date") as HTMLInputElement)?.value || "";
+              toast.success("Reservation requested...", {
+                description: `Thanks ${name} — we'll confirm your table for ${date}${time ? ` at ${time}` : ""} shortly.`,
+              });
             }}
           >
             <div className="space-y-1.5">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" required placeholder="Full name" />
+              <Input id="name" name="name" required placeholder="Full name" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="phone">Phone</Label>
-              <Input id="phone" required placeholder="+1 555 555 5555" />
+              <Input id="phone" name="phone" required placeholder="+1 555 555 5555" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="date">Date</Label>
-              <Input id="date" type="date" required />
+              <Input id="date" name="date" type="date" required />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="time">Time</Label>
-              <Input id="time" type="time" required />
+              <Input id="time" name="time" type="time" required />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="party">Party size</Label>
-              <Input id="party" type="number" min={1} defaultValue={2} />
+              <Input id="party" name="party" type="number" min={1} defaultValue={2} />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="note">Occasion / notes</Label>
-              <Input id="note" placeholder="Birthday, allergies..." />
+              <Input id="note" name="note" placeholder="Birthday, allergies..." />
             </div>
-            <div className="sm:col-span-2">
+            <div className="sm:col-span-2 space-y-3">
               <Button type="submit" className="w-full bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
                 Confirm reservation
               </Button>
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    type="button"
+                    className="w-full bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-warm"
+                  >
+                    Request reservation cancellation
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="border-white/40 bg-card/35 backdrop-blur-2xl shadow-[0_20px_60px_-20px_rgba(0,0,0,0.35)] ring-1 ring-white/30">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="font-display">Are you sure you want to cancel the reservation?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will notify the host stand and release your table.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter className="gap-3 sm:gap-3">
+                    <AlertDialogCancel
+                      onClick={() =>
+                        toast("Cancellation dismissed", {
+                          description: "Your reservation is still active.",
+                        })
+                      }
+                      className="btn-jelly rounded-full border-white/60 hover:shadow-[0_0_22px_-2px_rgba(255,255,255,0.75)]"
+                    >
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() =>
+                        toast.success("Reservation cancelled", {
+                          description: "Your reservation has been cancelled. We hope to see you soon.",
+                        })
+                      }
+                      className="btn-jelly rounded-full border-white/60 bg-transparent text-foreground hover:shadow-[0_0_22px_-2px_rgba(255,255,255,0.75)]"
+                    >
+                      Yes
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           </form>
         </div>

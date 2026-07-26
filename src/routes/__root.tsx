@@ -79,8 +79,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "RestaurantOS — Smart operations for modern restaurants" },
-      { name: "description", content: "RestaurantOS is the all-in-one hospitality suite for reservations, live queues, kitchen flow, inventory, and analytics." },
+      { title: "SoR — Smart operations for modern restaurants" },
+      { name: "description", content: "SoR is the all-in-one hospitality suite for reservations, live queues, kitchen flow, inventory, and analytics." },
       { name: "theme-color", content: "#f4a261" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

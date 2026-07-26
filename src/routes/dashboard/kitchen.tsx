@@ -22,9 +22,9 @@ type Station = (typeof STATIONS)[number];
 export const Route = createFileRoute("/dashboard/kitchen")({
   head: () => ({
     meta: [
-      { title: "Kitchen display · RestaurantOS" },
+      { title: "Kitchen display · SoR" },
       { name: "description", content: "Live ticket rail with prep timers and station routing." },
-      { property: "og:title", content: "Kitchen display · RestaurantOS" },
+      { property: "og:title", content: "Kitchen display · SoR" },
       { property: "og:description", content: "Live ticket rail with prep timers." },
     ],
   }),

@@ -9,9 +9,9 @@ import { CheckCircle2, ChefHat, Clock, Utensils, UtensilsCrossed } from "lucide-
 export const Route = createFileRoute("/orders")({
   head: () => ({
     meta: [
-      { title: "Track your order · RestaurantOS" },
+      { title: "Track your order · SoR" },
       { name: "description", content: "Live status of your order from kitchen to table." },
-      { property: "og:title", content: "Track your order · RestaurantOS" },
+      { property: "og:title", content: "Track your order · SoR" },
       { property: "og:description", content: "Live status of your order from kitchen to table." },
     ],
   }),

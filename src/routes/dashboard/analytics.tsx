@@ -7,9 +7,9 @@ import { DollarSign, LineChart as LineChartIcon, TrendingUp, Users } from "lucid
 export const Route = createFileRoute("/dashboard/analytics")({
   head: () => ({
     meta: [
-      { title: "Analytics · RestaurantOS" },
+      { title: "Analytics · SoR" },
       { name: "description", content: "Trends across revenue, covers, tickets and top menu items." },
-      { property: "og:title", content: "Analytics · RestaurantOS" },
+      { property: "og:title", content: "Analytics · SoR" },
       { property: "og:description", content: "Trends across revenue, covers, tickets and menu items." },
     ],
   }),

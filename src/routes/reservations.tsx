@@ -22,9 +22,9 @@ import {
 export const Route = createFileRoute("/reservations")({
   head: () => ({
     meta: [
-      { title: "Reservations · RestaurantOS" },
+      { title: "Reservations · SoR" },
       { name: "description", content: "Book a table with instant confirmation." },
-      { property: "og:title", content: "Reservations · RestaurantOS" },
+      { property: "og:title", content: "Reservations · SoR" },
       { property: "og:description", content: "Book a table with instant confirmation." },
     ],
   }),

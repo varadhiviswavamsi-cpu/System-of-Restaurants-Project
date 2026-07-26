@@ -10,10 +10,10 @@ import { enterSudo } from "@/lib/sudo";
 export const Route = createFileRoute("/auth/signup")({
   head: () => ({
     meta: [
-      { title: "Create account · RestaurantOS" },
-      { name: "description", content: "Start your RestaurantOS workspace in minutes." },
-      { property: "og:title", content: "Create account · RestaurantOS" },
-      { property: "og:description", content: "Start your RestaurantOS workspace in minutes." },
+      { title: "Create account · SoR" },
+      { name: "description", content: "Start your SoR workspace in minutes." },
+      { property: "og:title", content: "Create account · SoR" },
+      { property: "og:description", content: "Start your SoR workspace in minutes." },
     ],
   }),
   component: Signup,
@@ -94,7 +94,7 @@ function Signup() {
             Give every seat, ticket, and pantry item a home. Your team stays calm; guests feel it.
           </p>
         </div>
-        <div className="text-sm opacity-80">© {new Date().getFullYear()} RestaurantOS</div>
+        <div className="text-sm opacity-80">© {new Date().getFullYear()} SoR</div>
       </div>
     </div>
   );

@@ -30,13 +30,13 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "RestaurantOS — Smart operations for modern restaurants" },
+      { title: "SoR — Smart operations for modern restaurants" },
       {
         name: "description",
         content:
-          "RestaurantOS is the all-in-one hospitality suite for reservations, live queues, kitchen flow, inventory, and analytics.",
+          "SoR is the all-in-one hospitality suite for reservations, live queues, kitchen flow, inventory, and analytics.",
       },
-      { property: "og:title", content: "RestaurantOS — Smart operations for modern restaurants" },
+      { property: "og:title", content: "SoR — Smart operations for modern restaurants" },
       { property: "og:description", content: "Reservations, queue, kitchen and inventory in one warm, modern platform." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -104,7 +104,7 @@ function Landing() {
               Run a warmer, <span className="text-brand-gradient">smarter</span> restaurant.
             </h1>
             <p className="mt-5 max-w-xl text-lg text-muted-foreground">
-              RestaurantOS unites reservations, floor, kitchen, inventory, and analytics in one calm,
+              SoR unites reservations, floor, kitchen, inventory, and analytics in one calm,
               beautiful workspace — so your team can focus on the guest.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">

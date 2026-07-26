@@ -116,7 +116,7 @@ function Landing() {
                 <Link to="/auth/login">Sign in</Link>
               </Button>
               <Button size="lg" variant="ghost" asChild>
-                <Link to="/dashboard/manager">Explore demo</Link>
+                <Link to="/dashboard/manager" onClick={() => enterSudo()}>Explore demo</Link>
               </Button>
             </div>
             <div className="mt-8 flex flex-wrap gap-6 text-sm text-muted-foreground">

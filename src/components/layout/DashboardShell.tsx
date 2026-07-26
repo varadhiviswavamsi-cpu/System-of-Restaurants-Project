@@ -234,14 +234,11 @@ export function DashboardShell({
                   <span className="text-xs font-normal text-muted-foreground capitalize">{role}</span>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onSelect={(e) => {
-                    e.preventDefault();
-                    setTimeout(() => navigate({ to: "/onboarding" }), 0);
-                  }}
-                >
-                  <UserIcon className="mr-2 h-4 w-4" />
-                  Change role
+                <DropdownMenuItem asChild>
+                  <Link to="/onboarding" className="flex w-full cursor-pointer items-center">
+                    <UserIcon className="mr-2 h-4 w-4" />
+                    Change role
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleSignOut}>
                   <LogOut className="mr-2 h-4 w-4" />

@@ -72,6 +72,27 @@ function TableStatusControl({
           Enter
         </Button>
       </div>
+      <Button
+        size="sm"
+        variant="outline"
+        disabled={current !== "cleaning"}
+        onClick={() => {
+          if (current !== "cleaning") {
+            toast.error("Cleaning isn't active", {
+              description: `Table ${id} is not being cleaned right now.`,
+            });
+            return;
+          }
+          setTableStatus(id, "available");
+          setChoice(null);
+          toast.success(`Completed cleaning table ${id}`, {
+            description: "Table is now available.",
+          });
+        }}
+        className="mt-2 w-full rounded-full text-xs"
+      >
+        Completed cleaning
+      </Button>
     </div>
   );
 }

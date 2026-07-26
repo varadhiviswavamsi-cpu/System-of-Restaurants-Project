@@ -13,6 +13,8 @@ import {
   Sun,
   Moon,
   LogOut,
+  Loader2,
+  User as UserIcon,
 } from "lucide-react";
 import { useEffect, type ReactNode } from "react";
 import { Logo } from "@/components/brand/Logo";
@@ -32,23 +34,34 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/hooks/use-theme";
-import { exitSudo, useSudo } from "@/lib/sudo";
+import { canAccessDashboardPath, DEFAULT_ROUTE_FOR_ROLE, useAuth, type AppRole } from "@/hooks/use-auth";
 
-const nav = [
+type NavItem = { title: string; url: string; icon: React.ComponentType<{ className?: string }>; roles?: AppRole[] };
+type NavGroup = { label: string; items: NavItem[] };
+
+const nav: NavGroup[] = [
   {
     label: "Management",
     items: [
-      { title: "Manager", url: "/dashboard/manager", icon: LayoutDashboard },
-      { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
-      { title: "Inventory", url: "/dashboard/inventory", icon: Package },
+      { title: "Manager", url: "/dashboard/manager", icon: LayoutDashboard, roles: ["manager"] },
+      { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3, roles: ["manager"] },
+      { title: "Inventory", url: "/dashboard/inventory", icon: Package, roles: ["manager"] },
     ],
   },
   {
     label: "Operations",
     items: [
-      { title: "Staff floor", url: "/dashboard/staff", icon: Users },
-      { title: "Kitchen", url: "/dashboard/kitchen", icon: ChefHat },
+      { title: "Staff floor", url: "/dashboard/staff", icon: Users, roles: ["manager", "staff"] },
+      { title: "Kitchen", url: "/dashboard/kitchen", icon: ChefHat, roles: ["manager", "kitchen"] },
     ],
   },
   {
@@ -77,7 +90,7 @@ function ThemeToggle() {
   );
 }
 
-function AppSidebar() {
+function AppSidebar({ role }: { role: AppRole }) {
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
   return (
     <Sidebar collapsible="icon">
@@ -85,25 +98,29 @@ function AppSidebar() {
         <Logo />
       </SidebarHeader>
       <SidebarContent>
-        {nav.map((group) => (
-          <SidebarGroup key={group.label}>
-            <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {group.items.map((item) => (
-                  <SidebarMenuItem key={item.url}>
-                    <SidebarMenuButton asChild isActive={currentPath === item.url}>
-                      <Link to={item.url}>
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+        {nav.map((group) => {
+          const items = group.items.filter((i) => !i.roles || i.roles.includes(role));
+          if (items.length === 0) return null;
+          return (
+            <SidebarGroup key={group.label}>
+              <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {items.map((item) => (
+                    <SidebarMenuItem key={item.url}>
+                      <SidebarMenuButton asChild isActive={currentPath === item.url}>
+                        <Link to={item.url}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          );
+        })}
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -123,6 +140,12 @@ function AppSidebar() {
   );
 }
 
+function initials(name?: string | null, email?: string | null) {
+  const base = (name || email || "U").trim();
+  const parts = base.split(/\s+/).slice(0, 2);
+  return parts.map((p) => p[0]?.toUpperCase() ?? "").join("") || "U";
+}
+
 export function DashboardShell({
   title,
   subtitle,
@@ -135,28 +158,44 @@ export function DashboardShell({
   children: ReactNode;
 }) {
   const navigate = useNavigate();
-  const sudo = useSudo();
+  const { user, role, profile, loading, signOut } = useAuth();
+  const currentPath = useRouterState({ select: (s) => s.location.pathname });
 
+  // Gate: must be signed in
   useEffect(() => {
-    if (sudo === false) {
-      navigate({ to: "/" });
+    if (loading) return;
+    if (!user) {
+      navigate({ to: "/auth/login" });
+      return;
     }
-  }, [sudo, navigate]);
+    if (!role) {
+      navigate({ to: "/onboarding" });
+      return;
+    }
+    if (!canAccessDashboardPath(role, currentPath)) {
+      navigate({ to: DEFAULT_ROUTE_FOR_ROLE[role] });
+    }
+  }, [loading, user, role, currentPath, navigate]);
 
-  if (sudo !== true) {
-    // Not authorised — render nothing while we redirect out of sudo-only area.
-    return null;
+  if (loading || !user || !role || !canAccessDashboardPath(role, currentPath)) {
+    return (
+      <div className="flex min-h-screen items-center justify-center gap-3 text-muted-foreground">
+        <Loader2 className="h-5 w-5 animate-spin" /> Loading…
+      </div>
+    );
   }
 
-  const handleExitSudo = () => {
-    exitSudo();
+  const handleSignOut = async () => {
+    await signOut();
     navigate({ to: "/" });
   };
+
+  const displayName = profile?.full_name || user.email || "";
 
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
-        <AppSidebar />
+        <AppSidebar role={role} />
         <div className="flex flex-1 flex-col">
           <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur">
             <SidebarTrigger />
@@ -170,25 +209,41 @@ export function DashboardShell({
             <Button
               variant="outline"
               size="sm"
-              onClick={handleExitSudo}
+              onClick={() => navigate({ to: "/" })}
               className="hidden md:inline-flex"
-              aria-label="Exit sudo mode and return to customer view"
+              aria-label="Return to customer view"
             >
-              <LogOut className="mr-1.5 h-4 w-4" />
               Customer's view
             </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={handleExitSudo}
-              className="md:hidden h-9 w-9 shrink-0 rounded-full"
-              aria-label="Exit sudo mode"
-            >
-              <LogOut className="h-4 w-4" />
-            </Button>
-            <Avatar className="h-9 w-9 ring-2 ring-primary/20">
-              <AvatarFallback className="bg-brand-gradient text-primary-foreground">RO</AvatarFallback>
-            </Avatar>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  aria-label="Open profile menu"
+                  className="rounded-full outline-none ring-primary/40 focus-visible:ring-2"
+                >
+                  <Avatar className="h-9 w-9 ring-2 ring-primary/20">
+                    <AvatarFallback className="bg-brand-gradient text-primary-foreground">
+                      {initials(profile?.full_name, user.email)}
+                    </AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 backdrop-blur-2xl bg-card/80">
+                <DropdownMenuLabel className="flex flex-col">
+                  <span className="truncate">{displayName}</span>
+                  <span className="text-xs font-normal text-muted-foreground capitalize">{role}</span>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => navigate({ to: "/onboarding" })}>
+                  <UserIcon className="mr-2 h-4 w-4" />
+                  Change role
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleSignOut}>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </header>
           <main className="flex-1 p-4 md:p-6 lg:p-8">
             <div className="mx-auto w-full max-w-7xl space-y-6">{children}</div>
@@ -198,4 +253,3 @@ export function DashboardShell({
     </SidebarProvider>
   );
 }
-

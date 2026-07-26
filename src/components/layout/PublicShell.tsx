@@ -1,9 +1,18 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
-import { Sun, Moon, PanelLeft } from "lucide-react";
+import { Sun, Moon, PanelLeft, LogOut, User as UserIcon } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
 import { NavHistory } from "@/components/common/NavHistory";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   Sheet,
   SheetContent,
@@ -12,7 +21,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useTheme } from "@/hooks/use-theme";
-import { enterSudo } from "@/lib/sudo";
+import { DEFAULT_ROUTE_FOR_ROLE, useAuth } from "@/hooks/use-auth";
 
 const links = [
   { to: "/menu", label: "Menu" },
@@ -36,8 +45,15 @@ function ThemeToggle() {
   );
 }
 
+function initials(name?: string | null, email?: string | null) {
+  const base = (name || email || "U").trim();
+  const parts = base.split(/\s+/).slice(0, 2);
+  return parts.map((p) => p[0]?.toUpperCase() ?? "").join("") || "U";
+}
+
 function MenuTrigger() {
   const [open, setOpen] = useState(false);
+  const { user, role } = useAuth();
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
@@ -70,23 +86,86 @@ function MenuTrigger() {
             </Link>
           ))}
           <div className="mt-2 h-px bg-border" />
-          <Link
-            to="/auth/login"
-            onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-          >
-            Sign in
-          </Link>
-          <Link
-            to="/dashboard/manager"
-            onClick={() => { enterSudo(); setOpen(false); }}
-            className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-          >
-            Enter Sudo
-          </Link>
+          {user && role && role !== "customer" ? (
+            <Link
+              to={DEFAULT_ROUTE_FOR_ROLE[role]}
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              Go to dashboard
+            </Link>
+          ) : !user ? (
+            <>
+              <Link to="/auth/login" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+                Sign in
+              </Link>
+              <Link to="/auth/signup" onClick={() => setOpen(false)} className="rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground">
+                Create account
+              </Link>
+            </>
+          ) : null}
         </nav>
       </SheetContent>
     </Sheet>
+  );
+}
+
+function AccountArea() {
+  const navigate = useNavigate();
+  const { user, role, profile, signOut } = useAuth();
+
+  if (!user) {
+    return (
+      <>
+        <Button variant="ghost" size="sm" asChild>
+          <Link to="/auth/login">Sign in</Link>
+        </Button>
+        <Button size="sm" asChild className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
+          <Link to="/auth/signup">Get started</Link>
+        </Button>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {role && role !== "customer" && (
+        <Button size="sm" asChild className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
+          <Link to={DEFAULT_ROUTE_FOR_ROLE[role]}>Dashboard</Link>
+        </Button>
+      )}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button aria-label="Open profile menu" className="rounded-full outline-none ring-primary/40 focus-visible:ring-2">
+            <Avatar className="h-9 w-9 ring-2 ring-primary/20">
+              <AvatarFallback className="bg-brand-gradient text-primary-foreground">
+                {initials(profile?.full_name, user.email)}
+              </AvatarFallback>
+            </Avatar>
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-56 backdrop-blur-2xl bg-card/80">
+          <DropdownMenuLabel className="flex flex-col">
+            <span className="truncate">{profile?.full_name || user.email}</span>
+            <span className="text-xs font-normal text-muted-foreground capitalize">{role ?? "no role"}</span>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => navigate({ to: "/onboarding" })}>
+            <UserIcon className="mr-2 h-4 w-4" />
+            Change role
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={async () => {
+              await signOut();
+              navigate({ to: "/" });
+            }}
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            Sign out
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 }
 
@@ -114,12 +193,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
           </nav>
           <div className="ml-auto flex items-center gap-2">
             <ThemeToggle />
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/auth/login">Sign in</Link>
-            </Button>
-            <Button size="sm" asChild className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">
-              <Link to="/dashboard/manager" onClick={() => enterSudo()}>Enter Sudo</Link>
-            </Button>
+            <AccountArea />
           </div>
         </div>
       </header>

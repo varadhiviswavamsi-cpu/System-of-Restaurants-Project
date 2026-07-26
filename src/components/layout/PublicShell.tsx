@@ -112,7 +112,11 @@ function MenuTrigger() {
 
 function AccountArea() {
   const navigate = useNavigate();
-  const { user, role, profile, signOut } = useAuth();
+  const { user, role, profile, signOut, loading } = useAuth();
+
+  if (loading) {
+    return <div className="h-9 w-9 animate-pulse rounded-full bg-muted" aria-hidden />;
+  }
 
   if (!user) {
     return (

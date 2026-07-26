@@ -114,7 +114,7 @@ function MenuPage() {
                     <Button
                       size="sm"
                       disabled={!m.available || isOrdered}
-                      onClick={() => handleOrder(m.id, m.name, m.category)}
+                      onClick={() => handleOrder(m.id, m.name, m.category, m.price)}
                       className={
                         isOrdered
                           ? "bg-green-600 text-white shadow-warm hover:bg-green-600 disabled:opacity-100"

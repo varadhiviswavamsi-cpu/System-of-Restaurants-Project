@@ -121,7 +121,7 @@ function AccountArea() {
   if (!user) {
     return (
       <>
-        <Button variant="ghost" size="sm" asChild>
+        <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex">
           <Link to="/auth/login">Sign in</Link>
         </Button>
         <Button size="sm" asChild className="bg-brand-gradient text-primary-foreground shadow-warm hover:opacity-95">

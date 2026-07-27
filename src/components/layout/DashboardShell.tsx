@@ -198,9 +198,9 @@ export function DashboardShell({
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full">
+      <div className="flex min-h-dvh w-full max-w-full overflow-x-hidden">
         <AppSidebar role={role} />
-        <div className="flex flex-1 flex-col">
+        <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-30 flex h-16 items-center gap-2 border-b bg-background/80 px-3 backdrop-blur sm:gap-3 sm:px-4">
             <SidebarTrigger className="shrink-0" />
             <div className="hidden sm:block">

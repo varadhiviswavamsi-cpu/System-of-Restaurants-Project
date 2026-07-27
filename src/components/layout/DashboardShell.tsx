@@ -210,7 +210,7 @@ export function DashboardShell({
               <div className="truncate font-display text-base font-semibold sm:text-lg">{title}</div>
               {subtitle && <div className="hidden truncate text-xs text-muted-foreground sm:block">{subtitle}</div>}
             </div>
-            <div className="hidden items-center gap-2 sm:flex">{actions}</div>
+            <div className="hidden shrink-0 items-center gap-2 lg:flex">{actions}</div>
             <ThemeToggle />
             <Button
               variant="outline"

@@ -85,6 +85,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#f4a261" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "SoR — Smart operations for modern restaurants" },
+      { name: "twitter:title", content: "SoR — Smart operations for modern restaurants" },
+      { property: "og:description", content: "SoR is the all-in-one hospitality suite for reservations, live queues, kitchen flow, inventory, and analytics." },
+      { name: "twitter:description", content: "SoR is the all-in-one hospitality suite for reservations, live queues, kitchen flow, inventory, and analytics." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e3730a81-5dfb-41ea-bafb-b375d1575d47/id-preview-54488347--cb3c8545-0f1a-4a88-9622-fb9a17ea68c2.lovable.app-1785171444029.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e3730a81-5dfb-41ea-bafb-b375d1575d47/id-preview-54488347--cb3c8545-0f1a-4a88-9622-fb9a17ea68c2.lovable.app-1785171444029.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

@@ -39,7 +39,7 @@ export const Route = createFileRoute("/")({
           "SoR is the all-in-one hospitality suite for reservations, live queues, kitchen flow, inventory, and analytics.",
       },
       { property: "og:title", content: "SoR — Smart operations for modern restaurants" },
-      { property: "og:description", content: "Reservations, queue, kitchen and inventory in one warm, modern platform." },
+      { property: "og:description", content: "SoR is the all-in-one hospitality suite for reservations, live queues, kitchen flow, inventory, and analytics." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { property: "og:url", content: "/" },

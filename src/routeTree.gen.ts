@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ReservationsRouteImport } from './routes/reservations'
 import { Route as QueueRouteImport } from './routes/queue'
 import { Route as OrdersRouteImport } from './routes/orders'
@@ -27,6 +28,11 @@ import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReservationsRoute = ReservationsRouteImport.update({
   id: '/reservations',
   path: '/reservations',
@@ -120,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/orders': typeof OrdersRoute
   '/queue': typeof QueueRoute
   '/reservations': typeof ReservationsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -139,6 +146,7 @@ export interface FileRoutesByTo {
   '/orders': typeof OrdersRoute
   '/queue': typeof QueueRoute
   '/reservations': typeof ReservationsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -159,6 +167,7 @@ export interface FileRoutesById {
   '/orders': typeof OrdersRoute
   '/queue': typeof QueueRoute
   '/reservations': typeof ReservationsRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
@@ -180,6 +189,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/queue'
     | '/reservations'
+    | '/sitemap.xml'
     | '/auth/callback'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -199,6 +209,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/queue'
     | '/reservations'
+    | '/sitemap.xml'
     | '/auth/callback'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/queue'
     | '/reservations'
+    | '/sitemap.xml'
     | '/auth/callback'
     | '/auth/forgot-password'
     | '/auth/login'
@@ -238,6 +250,7 @@ export interface RootRouteChildren {
   OrdersRoute: typeof OrdersRoute
   QueueRoute: typeof QueueRoute
   ReservationsRoute: typeof ReservationsRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
@@ -253,6 +266,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reservations': {
       id: '/reservations'
       path: '/reservations'
@@ -382,6 +402,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrdersRoute: OrdersRoute,
   QueueRoute: QueueRoute,
   ReservationsRoute: ReservationsRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,

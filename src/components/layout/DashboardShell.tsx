@@ -216,7 +216,7 @@ export function DashboardShell({
               variant="outline"
               size="sm"
               onClick={() => navigate({ to: "/menu" })}
-              className="hidden md:inline-flex"
+              className="hidden shrink-0 xl:inline-flex"
               aria-label="Return to customer view"
             >
               Customer's view

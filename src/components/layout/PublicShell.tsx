@@ -192,7 +192,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-30 border-b bg-background/70 backdrop-blur">
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-2 px-3 sm:gap-3 sm:px-4">
           <MenuTrigger />
-          <Link to="/" className="min-w-0 shrink-0">
+          <Link to="/" className="min-w-0 shrink">
             <Logo />
           </Link>
           <div className="hidden sm:block">

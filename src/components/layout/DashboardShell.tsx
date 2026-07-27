@@ -253,8 +253,8 @@ export function DashboardShell({
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
-          <main className="flex-1 p-4 md:p-6 lg:p-8">
-            <div className="mx-auto w-full max-w-7xl space-y-6">{children}</div>
+          <main className="w-full min-w-0 flex-1 overflow-x-hidden p-3 sm:p-4 md:p-6 lg:p-8">
+            <div className="mx-auto w-full min-w-0 max-w-7xl space-y-6">{children}</div>
           </main>
         </div>
       </div>

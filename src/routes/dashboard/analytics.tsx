@@ -11,6 +11,7 @@ export const Route = createFileRoute("/dashboard/analytics")({
       { name: "description", content: "Trends across revenue, covers, tickets and top menu items." },
       { property: "og:title", content: "Analytics · SoR" },
       { property: "og:description", content: "Trends across revenue, covers, tickets and menu items." },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: AnalyticsPage,

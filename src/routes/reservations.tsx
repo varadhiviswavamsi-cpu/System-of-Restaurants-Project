@@ -32,7 +32,11 @@ export const Route = createFileRoute("/reservations")({
       { name: "description", content: "Book a table with instant confirmation." },
       { property: "og:title", content: "Reservations · SoR" },
       { property: "og:description", content: "Book a table with instant confirmation." },
+      { property: "og:url", content: "/reservations" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "/reservations" }],
   }),
   component: ReservationsPage,
 });

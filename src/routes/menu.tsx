@@ -16,7 +16,11 @@ export const Route = createFileRoute("/menu")({
       { name: "description", content: "Explore the seasonal menu with live availability." },
       { property: "og:title", content: "Menu · SoR" },
       { property: "og:description", content: "Seasonal menu with live availability." },
+      { property: "og:url", content: "/menu" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "/menu" }],
   }),
   component: MenuPage,
 });

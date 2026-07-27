@@ -18,6 +18,7 @@ export const Route = createFileRoute("/auth/signup")({
       { name: "description", content: "Start your SoR workspace in minutes." },
       { property: "og:title", content: "Create account · SoR" },
       { property: "og:description", content: "Start your SoR workspace in minutes." },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: Signup,

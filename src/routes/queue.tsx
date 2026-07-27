@@ -26,7 +26,11 @@ export const Route = createFileRoute("/queue")({
       { name: "description", content: "Join the waitlist and get notified when your table is ready." },
       { property: "og:title", content: "Waiting queue · SoR" },
       { property: "og:description", content: "Join the waitlist. We'll text when your table is ready." },
+      { property: "og:url", content: "/queue" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "/queue" }],
   }),
   component: QueuePage,
 });

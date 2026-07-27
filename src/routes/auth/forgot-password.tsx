@@ -16,6 +16,7 @@ export const Route = createFileRoute("/auth/forgot-password")({
       { name: "description", content: "Reset your SoR password by email." },
       { property: "og:title", content: "Reset password · SoR" },
       { property: "og:description", content: "Reset your SoR password by email." },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: ForgotPassword,

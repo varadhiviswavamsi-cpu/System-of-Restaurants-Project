@@ -113,7 +113,7 @@ function Signup() {
   };
 
   return (
-    <div className="relative grid min-h-screen lg:grid-cols-2">
+    <div className="relative grid min-h-dvh lg:grid-cols-2">
       <Link
         to="/auth/login"
         aria-label="Back to sign in"

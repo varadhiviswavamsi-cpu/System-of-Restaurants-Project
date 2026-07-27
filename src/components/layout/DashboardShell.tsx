@@ -183,7 +183,7 @@ export function DashboardShell({
 
   if (loading || !user || !role || (isDashboardRoute && !canAccessDashboardPath(role, currentPath))) {
     return (
-      <div className="flex min-h-screen items-center justify-center gap-3 text-muted-foreground">
+      <div className="flex min-h-dvh items-center justify-center gap-3 text-muted-foreground">
         <Loader2 className="h-5 w-5 animate-spin" /> Loading…
       </div>
     );
@@ -198,9 +198,9 @@ export function DashboardShell({
 
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full">
+      <div className="flex min-h-dvh w-full max-w-full overflow-x-hidden">
         <AppSidebar role={role} />
-        <div className="flex flex-1 flex-col">
+        <div className="flex min-w-0 flex-1 flex-col">
           <header className="sticky top-0 z-30 flex h-16 items-center gap-2 border-b bg-background/80 px-3 backdrop-blur sm:gap-3 sm:px-4">
             <SidebarTrigger className="shrink-0" />
             <div className="hidden sm:block">
@@ -210,13 +210,13 @@ export function DashboardShell({
               <div className="truncate font-display text-base font-semibold sm:text-lg">{title}</div>
               {subtitle && <div className="hidden truncate text-xs text-muted-foreground sm:block">{subtitle}</div>}
             </div>
-            <div className="hidden items-center gap-2 sm:flex">{actions}</div>
+            <div className="hidden shrink-0 items-center gap-2 lg:flex">{actions}</div>
             <ThemeToggle />
             <Button
               variant="outline"
               size="sm"
               onClick={() => navigate({ to: "/menu" })}
-              className="hidden md:inline-flex"
+              className="hidden shrink-0 xl:inline-flex"
               aria-label="Return to customer view"
             >
               Customer's view
@@ -253,8 +253,13 @@ export function DashboardShell({
               </DropdownMenuContent>
             </DropdownMenu>
           </header>
-          <main className="flex-1 p-4 md:p-6 lg:p-8">
-            <div className="mx-auto w-full max-w-7xl space-y-6">{children}</div>
+          {actions && (
+            <div className="flex w-full min-w-0 flex-wrap items-center gap-2 border-b bg-background/60 px-3 py-2 lg:hidden">
+              {actions}
+            </div>
+          )}
+          <main className="w-full min-w-0 flex-1 overflow-x-hidden p-3 sm:p-4 md:p-6 lg:p-8">
+            <div className="mx-auto w-full min-w-0 max-w-7xl space-y-6">{children}</div>
           </main>
         </div>
       </div>

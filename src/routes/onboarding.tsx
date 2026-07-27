@@ -67,14 +67,14 @@ function Onboarding() {
 
   if (loading || !user) {
     return (
-      <div className="flex min-h-screen items-center justify-center gap-3 text-muted-foreground">
+      <div className="flex min-h-dvh items-center justify-center gap-3 text-muted-foreground">
         <Loader2 className="h-5 w-5 animate-spin" /> Loading…
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background px-4 py-12">
+    <div className="min-h-dvh bg-background px-4 py-12">
       <div className="mx-auto max-w-3xl">
         <Logo />
         <h1 className="mt-8 font-display text-3xl font-bold sm:text-4xl">Welcome to SoR</h1>

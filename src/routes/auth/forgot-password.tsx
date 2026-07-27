@@ -52,7 +52,7 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center p-6">
+    <div className="relative flex min-h-dvh items-center justify-center p-6">
       <Link
         to="/auth/login"
         className="absolute left-4 top-4 inline-flex h-10 items-center gap-2 rounded-full border border-white/50 bg-gradient-to-b from-white/40 to-white/5 px-3 text-sm font-medium text-foreground backdrop-blur-2xl hover:shadow-[0_0_22px_-2px_rgba(255,255,255,0.75)] dark:border-white/20 dark:from-white/15 dark:to-white/5"

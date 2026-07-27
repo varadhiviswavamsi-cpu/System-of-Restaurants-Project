@@ -14,6 +14,7 @@ export const Route = createFileRoute("/onboarding")({
       { name: "description", content: "Pick your role to personalize your SoR workspace." },
       { property: "og:title", content: "Choose your role · SoR" },
       { property: "og:description", content: "Pick your role to personalize your SoR workspace." },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: Onboarding,

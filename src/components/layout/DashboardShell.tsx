@@ -201,12 +201,14 @@ export function DashboardShell({
       <div className="flex min-h-screen w-full">
         <AppSidebar role={role} />
         <div className="flex flex-1 flex-col">
-          <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b bg-background/80 px-4 backdrop-blur">
-            <SidebarTrigger />
-            <NavHistory />
+          <header className="sticky top-0 z-30 flex h-16 items-center gap-2 border-b bg-background/80 px-3 backdrop-blur sm:gap-3 sm:px-4">
+            <SidebarTrigger className="shrink-0" />
+            <div className="hidden sm:block">
+              <NavHistory />
+            </div>
             <div className="min-w-0 flex-1">
-              <div className="truncate font-display text-lg font-semibold">{title}</div>
-              {subtitle && <div className="truncate text-xs text-muted-foreground">{subtitle}</div>}
+              <div className="truncate font-display text-base font-semibold sm:text-lg">{title}</div>
+              {subtitle && <div className="hidden truncate text-xs text-muted-foreground sm:block">{subtitle}</div>}
             </div>
             <div className="hidden items-center gap-2 sm:flex">{actions}</div>
             <ThemeToggle />

@@ -106,6 +106,7 @@ export const Route = createFileRoute("/dashboard/staff")({
       { name: "description", content: "Floor map, table status, and open tickets for front-of-house staff." },
       { property: "og:title", content: "Staff floor · SoR" },
       { property: "og:description", content: "Floor map, tables and open tickets." },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: StaffDashboard,

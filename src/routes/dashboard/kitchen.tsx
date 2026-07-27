@@ -26,6 +26,7 @@ export const Route = createFileRoute("/dashboard/kitchen")({
       { name: "description", content: "Live ticket rail with prep timers and station routing." },
       { property: "og:title", content: "Kitchen display · SoR" },
       { property: "og:description", content: "Live ticket rail with prep timers." },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: KitchenDashboard,

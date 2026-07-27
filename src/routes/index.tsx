@@ -42,7 +42,11 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Reservations, queue, kitchen and inventory in one warm, modern platform." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:url", content: "/" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Landing,
 });

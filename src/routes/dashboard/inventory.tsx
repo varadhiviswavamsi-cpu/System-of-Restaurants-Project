@@ -36,6 +36,7 @@ export const Route = createFileRoute("/dashboard/inventory")({
       { name: "description", content: "Stock levels, low-item alerts and one-click reorders." },
       { property: "og:title", content: "Inventory · SoR" },
       { property: "og:description", content: "Stock levels and low-item alerts." },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: InventoryPage,

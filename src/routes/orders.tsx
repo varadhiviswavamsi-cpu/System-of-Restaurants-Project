@@ -14,7 +14,11 @@ export const Route = createFileRoute("/orders")({
       { name: "description", content: "Live status of your order from kitchen to table." },
       { property: "og:title", content: "Track your order · SoR" },
       { property: "og:description", content: "Live status of your order from kitchen to table." },
+      { property: "og:url", content: "/orders" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "/orders" }],
   }),
   component: OrdersPage,
 });

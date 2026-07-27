@@ -17,6 +17,7 @@ export const Route = createFileRoute("/dashboard/manager")({
       { name: "description", content: "Revenue, covers, reservations and service pulse at a glance." },
       { property: "og:title", content: "Manager dashboard · SoR" },
       { property: "og:description", content: "Revenue, covers and service pulse at a glance." },
+      { name: "robots", content: "noindex, nofollow" },
     ],
   }),
   component: ManagerDashboard,

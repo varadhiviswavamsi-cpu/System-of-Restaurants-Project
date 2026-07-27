@@ -183,7 +183,7 @@ export function DashboardShell({
 
   if (loading || !user || !role || (isDashboardRoute && !canAccessDashboardPath(role, currentPath))) {
     return (
-      <div className="flex min-h-screen items-center justify-center gap-3 text-muted-foreground">
+      <div className="flex min-h-dvh items-center justify-center gap-3 text-muted-foreground">
         <Loader2 className="h-5 w-5 animate-spin" /> Loading…
       </div>
     );

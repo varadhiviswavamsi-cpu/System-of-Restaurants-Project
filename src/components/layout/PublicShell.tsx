@@ -188,14 +188,16 @@ export function PublicShell({ children }: { children: ReactNode }) {
   }, [loading, user, role, profile?.onboarded, navigate]);
 
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-30 border-b bg-background/70 backdrop-blur">
-        <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-3 px-4">
+        <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-2 px-3 sm:gap-3 sm:px-4">
           <MenuTrigger />
-          <Link to="/" className="shrink-0">
+          <Link to="/" className="min-w-0 shrink-0">
             <Logo />
           </Link>
-          <NavHistory />
+          <div className="hidden sm:block">
+            <NavHistory />
+          </div>
           <nav className="hidden flex-1 items-center justify-center gap-1 md:flex">
             {links.map((l) => (
               <Link
@@ -208,16 +210,23 @@ export function PublicShell({ children }: { children: ReactNode }) {
               </Link>
             ))}
           </nav>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
             <ThemeToggle />
             <AccountArea />
           </div>
         </div>
       </header>
-      <main>{children}</main>
-      <footer className="border-t bg-background/60">
+      <main className="flex-1">{children}</main>
+      <footer className="mt-auto border-t bg-background/60">
         <div className="mx-auto flex w-full max-w-7xl flex-col items-start justify-between gap-4 px-4 py-8 sm:flex-row sm:items-center">
           <Logo />
+          <nav className="flex flex-wrap gap-x-4 gap-y-2">
+            {links.map((l) => (
+              <Link key={l.to} to={l.to} className="text-xs text-muted-foreground hover:text-foreground">
+                {l.label}
+              </Link>
+            ))}
+          </nav>
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} SoR. Crafted for hospitality teams.
           </p>

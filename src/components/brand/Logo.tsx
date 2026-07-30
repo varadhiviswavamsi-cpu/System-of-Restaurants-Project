@@ -1,10 +1,10 @@
-import logoAsset from "@/assets/sor-logo.jpeg.asset.json";
+import logoUrl from "@/assets/sor-logo.jpeg";
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex min-w-0 items-center gap-2">
       <div className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-xl bg-background shadow-warm">
-        <img src={logoAsset.url} alt="System of Restaurants logo" className="h-full w-full object-contain" />
+        <img src={logoUrl} alt="System of Restaurants logo" className="h-full w-full object-contain" />
       </div>
       {!compact && (
         <div className="min-w-0 leading-tight">

@@ -11,6 +11,16 @@
     "lint": "eslint .",
     "format": "prettier --write ."
   },
+  "scripts": {
+  "dev": "vite dev",
+  "build": "vite build",
+  "build:dev": "vite build --mode development",
+  "build:ghpages": "vite build --base ${VITE_BASE:-/}",
+  "preview": "vite preview",
+  "lint": "eslint .",
+  "format": "prettier --write ."
+},
+
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@lovable.dev/cloud-auth-js": "^1.1.2",

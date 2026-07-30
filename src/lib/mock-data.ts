@@ -1,13 +1,12 @@
 // Central mock data for the SoR scaffold.
 // Replace with real Supabase queries in later prompts.
 
-import margheritaAsset from "@/assets/wood-fired-margherita.jpg.asset.json";
-import truffleAsset from "@/assets/truffle-pasta.jpg.asset.json";
-import branzinoAsset from "@/assets/branzino.jpg.asset.json";
-import burrataAsset from "@/assets/burrata-peach.jpg.asset.json";
-import tiramisuAsset from "@/assets/tiramisu.jpg.asset.json";
-import octopusAsset from "@/assets/octopus.jpg.asset.json";
-
+import margherita from "@/assets/wood-fired-margherita.jpg";
+import truffle from "@/assets/truffle-pasta.jpg";
+import branzino from "@/assets/branzino.jpg";
+import burrata from "@/assets/burrata-peach.jpg";
+import tiramisu from "@/assets/tiramisu.jpg";
+import octopus from "@/assets/octopus.jpg";
 
 
 
@@ -27,13 +26,13 @@ export interface MenuItem {
 }
 
 export const menuItems: MenuItem[] = [
-  { id: "m1", name: "Wood-fired Margherita", description: "San Marzano tomato, fior di latte, basil", price: 14, category: "Pizza", available: true, emoji: "🍕", image: margheritaAsset.url },
-  { id: "m2", name: "Truffle Tagliatelle", description: "Fresh pasta, black truffle, parmigiano", price: 22, category: "Pasta", available: true, emoji: "🍝", image: truffleAsset.url },
+  { id: "m1", name: "Wood-fired Margherita", description: "San Marzano tomato, fior di latte, basil", price: 14, category: "Pizza", available: true, emoji: "🍕", image: margherita },
+  { id: "m2", name: "Truffle Tagliatelle", description: "Fresh pasta, black truffle, parmigiano", price: 22, category: "Pasta", available: true, emoji: "🍝", image: truffle },
 
-  { id: "m3", name: "Grilled Branzino", description: "Whole sea bass, lemon, herbs, olive oil", price: 28, category: "Mains", available: true, emoji: "🐟", image: branzinoAsset.url },
-  { id: "m4", name: "Burrata & Peach", description: "Creamy burrata, grilled peach, prosciutto", price: 16, category: "Starters", available: true, emoji: "🧀", image: burrataAsset.url },
-  { id: "m5", name: "Tiramisu Classico", description: "Espresso, mascarpone, cocoa", price: 9, category: "Desserts", available: true, emoji: "🍰", image: tiramisuAsset.url },
-  { id: "m6", name: "Charred Octopus", description: "Smoked paprika, potato, salsa verde", price: 19, category: "Starters", available: false, emoji: "🐙", image: octopusAsset.url },
+  { id: "m3", name: "Grilled Branzino", description: "Whole sea bass, lemon, herbs, olive oil", price: 28, category: "Mains", available: true, emoji: "🐟", image: branzino },
+  { id: "m4", name: "Burrata & Peach", description: "Creamy burrata, grilled peach, prosciutto", price: 16, category: "Starters", available: true, emoji: "🧀", image: burrata },
+  { id: "m5", name: "Tiramisu Classico", description: "Espresso, mascarpone, cocoa", price: 9, category: "Desserts", available: true, emoji: "🍰", image: tiramisu },
+  { id: "m6", name: "Charred Octopus", description: "Smoked paprika, potato, salsa verde", price: 19, category: "Starters", available: false, emoji: "🐙", image: octopus },
 ];
 
 export interface Order {

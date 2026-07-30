@@ -175,7 +175,7 @@ function AccountArea() {
   );
 }
 
-export function PublicShell({ children }: { children: ReactNode }) {
+export function PublicShell({ children, showBack = true }: { children: ReactNode; showBack?: boolean }) {
   const navigate = useNavigate();
   const { user, role, profile, loading } = useAuth();
 
@@ -195,9 +195,11 @@ export function PublicShell({ children }: { children: ReactNode }) {
           <Link to="/" className="min-w-0 shrink">
             <Logo />
           </Link>
-          <div className="hidden sm:block">
-            <NavHistory />
-          </div>
+          {showBack && (
+            <div className="hidden sm:block">
+              <NavHistory />
+            </div>
+          )}
           <nav className="hidden flex-1 items-center justify-center gap-1 md:flex">
             {links.map((l) => (
               <Link

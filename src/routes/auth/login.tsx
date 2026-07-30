@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { DEFAULT_ROUTE_FOR_ROLE, useAuth, type AppRole } from "@/hooks/use-auth";
 
 export const Route = createFileRoute("/auth/login")({
@@ -32,7 +31,7 @@ const schema = z.object({
 function GoogleIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
-      <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.31 0-6-2.74-6-6.1s2.69-6.1 6-6.1c1.88 0 3.14.8 3.86 1.49l2.63-2.54C16.9 3.35 14.7 2.4 12 2.4 6.98 2.4 2.9 6.48 2.9 11.5S6.98 20.6 12 20.6c6.93 0 9.1-4.86 9.1-7.4 0-.5-.05-.88-.13-1.26H12z"/>
+      <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.7 4.1-5.5 4.1-3.31 0-6-2.74-6-6.1s2.69-6.1 6-6.1c1.88 0 3.14.8 3.86 1.49l2.63-2.54C16.9 3.35 14.7 2.4 12 2.4 6.98 2.4 2.9 6.48 2.9 11.5S6.[...]
     </svg>
   );
 }
@@ -98,18 +97,33 @@ function Login() {
 
   const handleGoogle = async () => {
     setGoogleLoading(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin + "/auth/callback",
-    });
-    if (result.error) {
+
+    // Use Supabase OAuth directly so the Google consent screen reflects your Supabase/Google Cloud OAuth client branding.
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: window.location.origin + "/auth/callback" },
+      } as any);
+
+      setGoogleLoading(false);
+
+      if (error) {
+        toast.error("Google sign-in failed. Please try again.");
+        return;
+      }
+
+      // If Supabase returns a redirect URL, navigate the browser there to begin the OAuth flow.
+      if (data && (data as any).url) {
+        window.location.href = (data as any).url;
+        return;
+      }
+
+      // Otherwise, attempt to continue (unlikely for redirect flow).
+      await routeAfterLogin(navigate);
+    } catch (e) {
       setGoogleLoading(false);
       toast.error("Google sign-in failed. Please try again.");
-      return;
     }
-    if (result.redirected) return;
-    // Popup flow — session already set
-    setGoogleLoading(false);
-    await routeAfterLogin(navigate);
   };
 
   return (

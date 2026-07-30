@@ -1,0 +1,5 @@
+---
+# Fallback to index for single-page app
+https://*/*  /index.html  200
+http://*/*   /index.html  200
+---

@@ -116,7 +116,7 @@ function Landing() {
   }
 
   return (
-    <PublicShell>
+    <PublicShell showBack={false}>
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-16 md:grid-cols-2 md:py-24 lg:py-28">
